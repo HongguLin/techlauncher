@@ -50,7 +50,7 @@
     <orderEntry type="library" name="Gradle: org.grails:grails-datastore-rest-client:6.1.9.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.grails:grails-web-testing-support:1.1.4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.web:el-impl:2.1.2-b03" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.196" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: mysql:mysql-connector-java:5.1.40" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.1.11" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.tomcat:tomcat-jdbc:8.5.27" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.25" level="project" />
