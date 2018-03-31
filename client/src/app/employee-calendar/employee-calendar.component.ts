@@ -11,7 +11,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 export class EmployeeCalendarComponent implements OnInit {
   @ViewChild("content") dialogModal: TemplateRef<any>
 
-	holidays:any;
+  // #colon is for type and = is assignment
+	holidays : any;
+  fromDate = "";
 
   constructor(
     private http: HttpClient,
@@ -34,7 +36,7 @@ export class EmployeeCalendarComponent implements OnInit {
 			},
 
       dayClick: (data, jsEvent, view) => {
-        console.log(data.format());
+        this.fromDate = data.format();
         this.modalService.open(this.dialogModal);
       },
 
