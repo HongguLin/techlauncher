@@ -16,11 +16,20 @@ export class EmployeeCalendarComponent implements OnInit {
 	getPublicHoliday() {
 		this.http.get('http://localhost:8080/holidays?max=30').subscribe(data => {
 			this.holidays = data;
+			this.displayCalendar()
 		});
+
 	}
 
 	displayCalendar(){
-  	console.log(this.holidays)
+  	var hds = this.holidays.map(holiday => {
+  		return {
+			  title: holiday.name,
+			  start: holiday.start.split('T')[0],
+			  end: holiday.end.split('T')[0]
+			}
+	  });
+  	console.log(this.holidays);
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
@@ -30,12 +39,7 @@ export class EmployeeCalendarComponent implements OnInit {
 
 			displayEventTime: false, // don't show the time column in list view
 
-			events: [
-				{
-					title  : 'event1',
-					start  : '2018-03-01'
-				}
-			],
+			events: hds,
 
 			loading: function(bool) {
 				$('#loading').toggle(bool);
@@ -49,7 +53,6 @@ export class EmployeeCalendarComponent implements OnInit {
   ngOnInit() {
 		console.log("hello")
 	  this.getPublicHoliday();
-	  this.displayCalendar();
 
   }
 
