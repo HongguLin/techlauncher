@@ -5,8 +5,9 @@
 2. Install Yarn: ```npm install -g yarn```
 3. Install [Grails 3](https://grails.org/download.html)
 4. Install [Git](https://git-scm.com/downloads) and clone the repository
-5. Connect to the calendar database: mysql --user=root --password calendar
+5. Connect to the calendar database: mysql -u=root -p
 6. From the project root directory, run the command: source initialise.sql
+6. From the project root directory, run the command: source public_holiday.sql
 
 ### Development Workflow
 go to the project directory
