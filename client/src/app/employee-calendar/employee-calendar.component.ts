@@ -15,6 +15,11 @@ export class EmployeeCalendarComponent implements OnInit {
 	holidays : any;
   fromDate = "";
   toDate = "";
+  events = [
+    {title  : 'reason',
+    		start  : this.fromDate,
+        end: this.toDate,
+        description: 'This is a cool event'}]
 
   constructor(
     private http: HttpClient,
@@ -26,6 +31,17 @@ export class EmployeeCalendarComponent implements OnInit {
 			this.holidays = data;
 		});
 	}
+
+  addEvents(){
+    console.log('hello')
+    $('#calendar').fullCalendar('renderEvent', {
+        title: 'dynamic event',
+        start: this.fromDate,
+        end: this.toDate,
+        color: '#424bf4',
+        textColor: 'white',
+    });
+  }
 
 	displayCalendar(){
   	console.log(this.holidays)
@@ -45,21 +61,21 @@ export class EmployeeCalendarComponent implements OnInit {
 
 			displayEventTime: false, // don't show the time column in list view
 
-			events: [
-				{
-					title  : 'event1',
-					start  : '2018-03-08',
-          end: '2016-03-10',
-          description: 'This is a cool event'
-				},
-        {
-          title: 'Long Event',
-          start: '2018-03-07',
-          end: '2018-03-10',
-          color: 'purple' 
-        },
-			],
-      eventColor: '#f4c542',
+			// events: [
+			// 	{
+			// 		title  : 'reason',
+			// 		start  : this.fromDate,
+      //     end: this.toDate,
+      //     description: 'This is a cool event'
+			// 	},
+      //   {
+      //     title: 'Llksdjfldsjf',
+      //     start: '2018-03-07',
+      //     end: '2018-03-10',
+      //     color: 'purple'
+      //   },
+			// ],
+      // eventColor: '#f4c542',
 
 			loading: function(bool) {
 				$('#loading').toggle(bool);
