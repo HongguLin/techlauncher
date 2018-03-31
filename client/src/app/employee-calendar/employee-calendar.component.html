@@ -1,41 +1,49 @@
 <div id='calendar'></div>
 
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Add Unavailability</h2>
-
-    <label class="container">
-      <br>
-      From:<input class="text"><br>
-      To:<input class="text">
-      <input class="title" type="radio" checked="checked" name="radio">
-      <span class="checkmark"></span>
-    </label>
-    <label class="container">
-      <br>
-      Repeat<input class="text">weeks
-      <input class="title" type="radio" name="radio">
-      <span class="checkmark"></span>
-    </label>
-    <label class="container">Repeat always
-      <input class="title" type="radio" name="radio">
-      <span class="checkmark"></span>
-    </label>
-
-    <P>Reasons:</P>
-    <select>
-      <option value="0">Holiday</option>
-      <option value="1">Sick</option>
-      <option value="2">Travel</option>
-    </select>
-
-    <button>Save</button>
-    <button>Cancel</button>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Add Unavailability</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- From date unavailability  -->
+    <div class="form-group row">
+      <label for="example-date-input" class="col-4 col-form-label">From:</label>
+      <div class="col-8">
+        <input class="form-control" type="date" [(ngModel)]="fromDate" id="example-date-input">
+      </div>
+    </div>
+    <!-- To date unavailability  -->
+    <div class="form-group row">
+      <label for="example-date-input" class="col-4 col-form-label">To:</label>
+      <div class="col-8">
+        <!-- <input class="form-control" type="date" [(ngModel)]="toDate" id="example-date-input"> -->
+        <input class="form-control" type="date" [(ngModel)]="toDate" (ngModelChange)="toDateChange($event)" id="example-date-input">
+      </div>
+    </div>
+    <!-- Reason dropdown -->
+    <div class="form-group row">
+      <label for="example-date-input" class="col-4 col-form-label">Reason:</label>
+      <div class="col-8">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button class="dropdown-item">Action - 1</button>
+            <button class="dropdown-item">Another Action</button>
+            <button class="dropdown-item">Something else is here</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
-</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="addEvents()">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>
+<hr>
 
+<pre>{{closeResult}}</pre>

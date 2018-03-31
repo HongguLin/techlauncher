@@ -1,17 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import 'fullcalendar';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-employee-calendar',
   templateUrl: './employee-calendar.component.html',
   styleUrls: ['./employee-calendar.component.css']
 })
 export class EmployeeCalendarComponent implements OnInit {
+  @ViewChild("content") dialogModal: TemplateRef<any>
 
-	holidays:any;
+  // #colon is for type and = is assignment
+	holidays : any;
+  fromDate = "";
+  toDate = "";
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private modalService: NgbModal
+  ) { }
 
 	getPublicHoliday() {
 		this.http.get('http://localhost:8080/holidays?max=30').subscribe(data => {
@@ -20,6 +28,17 @@ export class EmployeeCalendarComponent implements OnInit {
 		});
 
 	}
+
+  addEvents(){
+    console.log('hello')
+    $('#calendar').fullCalendar('renderEvent', {
+        title: 'dynamic event',
+        start: this.fromDate,
+        end: this.toDate,
+        color: '#424bf4',
+        textColor: 'white',
+    });
+  }
 
 	displayCalendar(){
   	var hds = this.holidays.map(holiday => {
@@ -30,7 +49,6 @@ export class EmployeeCalendarComponent implements OnInit {
 			}
 	  });
 
-
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
@@ -38,48 +56,28 @@ export class EmployeeCalendarComponent implements OnInit {
 				right: 'month,listYear'
 			},
 
+      dayClick: (data, jsEvent, view) => {
+        this.fromDate = data.format();
+        this.toDate = data.format();
+        this.modalService.open(this.dialogModal);
+        console.log('from', this.fromDate)
+      },
+
 			displayEventTime: false, // don't show the time column in list view
 
 			events: hds,
 
-			dayClick: function(date, jsEvent, view) {
-				//add pop up window inside
-				// Get the modal
-				var modal = document.getElementById('myModal');
-				var span = document.getElementsByClassName("close")[0];
-
-				// When the user clicks on <span> (x), close the modal
-				span.onclick = function() {
-					modal.style.display = "none";
-				}
-
-
-				// When the user clicks the button, open the modal
-
-				modal.style.display = "block";
-
-				window.onclick = function(event) {
-					if (event.target == modal) {
-						modal.style.display = "none";
-					}
-				}
-
-
-				//alert('Clicked on: ' + date.format());
-
-			},
-
 			loading: function(bool) {
 				$('#loading').toggle(bool);
 			}
-
-
 		});
   }
 
-	
+  toDateChange(event) {
+    console.log('to', this.toDate)
+  }
+
   ngOnInit() {
-		console.log("hello")
 	  this.getPublicHoliday();
 
   }

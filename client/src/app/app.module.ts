@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
 import { EmployeeCalendarComponent } from './employee-calendar/employee-calendar.component';
+import { DialogModalComponent } from './dialog-modal/dialog-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
-    EmployeeCalendarComponent
+    EmployeeCalendarComponent,
+    DialogModalComponent
   ],
   imports: [
     BrowserModule,
