@@ -1,17 +1,22 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import 'fullcalendar';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-employee-calendar',
   templateUrl: './employee-calendar.component.html',
   styleUrls: ['./employee-calendar.component.css']
 })
 export class EmployeeCalendarComponent implements OnInit {
+  @ViewChild("content") dialogModal: TemplateRef<any>
 
 	holidays:any;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private modalService: NgbModal
+  ) { }
 
 	getPublicHoliday() {
 		this.http.get('http://localhost:8080/holidays?max=30').subscribe(data => {
@@ -28,6 +33,11 @@ export class EmployeeCalendarComponent implements OnInit {
 				right: 'month,listYear'
 			},
 
+      dayClick: (data, jsEvent, view) => {
+        console.log(data.format());
+        this.modalService.open(this.dialogModal);
+      },
+
 			displayEventTime: false, // don't show the time column in list view
 
 			events: [
@@ -43,7 +53,6 @@ export class EmployeeCalendarComponent implements OnInit {
 
 		});
   }
-
 
 
   ngOnInit() {
