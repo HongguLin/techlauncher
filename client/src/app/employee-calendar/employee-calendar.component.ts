@@ -44,8 +44,28 @@ export class EmployeeCalendarComponent implements OnInit {
 
 			dayClick: function(date, jsEvent, view) {
 				//add pop up window inside
+				// Get the modal
+				var modal = document.getElementById('myModal');
+				var span = document.getElementsByClassName("close")[0];
 
-				alert('Clicked on: ' + date.format());
+				// When the user clicks on <span> (x), close the modal
+				span.onclick = function() {
+					modal.style.display = "none";
+				}
+
+
+				// When the user clicks the button, open the modal
+
+				modal.style.display = "block";
+
+				window.onclick = function(event) {
+					if (event.target == modal) {
+						modal.style.display = "none";
+					}
+				}
+
+
+				//alert('Clicked on: ' + date.format());
 
 			},
 

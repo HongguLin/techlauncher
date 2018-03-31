@@ -4,6 +4,8 @@
 </div>
 -->
 
+
+
 <div id='calendar'></div>
 
 <div class="container">
@@ -30,3 +32,42 @@
     </tbody>
   </table>
 </div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Add Unavailability</h2>
+
+    <label class="container">
+      <br>
+      From:<input class="text"><br>
+      To:<input class="text">
+      <input class="title" type="radio" checked="checked" name="radio">
+      <span class="checkmark"></span>
+    </label>
+    <label class="container">
+      <br>
+      Repeat<input class="text">weeks
+      <input class="title" type="radio" name="radio">
+      <span class="checkmark"></span>
+    </label>
+    <label class="container">Repeat always
+      <input class="title" type="radio" name="radio">
+      <span class="checkmark"></span>
+    </label>
+
+    <P>Reasons:</P>
+    <select>
+      <option value="0">Holiday</option>
+      <option value="1">Sick</option>
+      <option value="2">Travel</option>
+    </select>
+
+    <button>Save</button>
+    <button>Cancel</button>
+
+  </div>
+</div>
+
