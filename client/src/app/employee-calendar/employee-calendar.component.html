@@ -19,12 +19,23 @@
     <div class="form-group row">
       <label for="example-date-input" class="col-4 col-form-label">To:</label>
       <div class="col-8">
-        <!-- <input class="form-control" type="date" [(ngModel)]="toDate" id="example-date-input"> -->
         <input class="form-control" type="date" [(ngModel)]="toDate" (ngModelChange)="toDateChange($event)" id="example-date-input">
       </div>
     </div>
     <!-- Reason dropdown -->
-    <app-my-event></app-my-event>
+    <div class="form-group row">
+      <label for="event" class="col-4 col-form-label">Reason: </label>
+      <div class="col-8">
+        <select class="event-control form-control" id="event"
+                required
+                [(ngModel)]="model.event" name="event"
+                #event="ngModel">
+          <option *ngFor="let e of events" [value]="e">{{e}}</option>
+        </select> 
+      </div>
+    </div>
+
+    
 
   </div>
   <div class="modal-footer">
