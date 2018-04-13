@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'fullcalendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { MyEvent} from '../my-event';
 
 @Component({
   selector: 'app-employee-calendar',
@@ -15,11 +16,17 @@ export class EmployeeCalendarComponent implements OnInit {
 	holidays : any;
   fromDate = "";
   toDate = "";
+  events = ['select', 'RDO', 'Annual Leave', 'Sick Leave', 'Other'];
+  public model = new MyEvent(this.events[0]);
 
   constructor(
     private http: HttpClient,
     private modalService: NgbModal
   ) { }
+
+  newEvent() {
+		this.model = new MyEvent('');
+	}
 
 	getPublicHoliday() {
 		this.http.get('http://localhost:8080/holidays?max=30').subscribe(data => {
@@ -31,8 +38,10 @@ export class EmployeeCalendarComponent implements OnInit {
 
   addEvents(){
     console.log('hello')
+    
     $('#calendar').fullCalendar('renderEvent', {
-        title: 'dynamic event',
+      title: this.model.event,
+       
         start: this.fromDate,
         end: this.toDate,
         color: '#424bf4',
