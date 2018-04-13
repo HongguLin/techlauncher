@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="21585d29-a524-4e1b-8b1e-37e9777324ea" name="Default" comment="Merge branch 'atlas'&#10;&#10;# Conflicts:&#10;#&#9;.gradle/3.4.1/fileContent/fileContent.lock&#10;#&#9;.gradle/3.4.1/taskHistory/fileHashes.bin&#10;#&#9;.gradle/3.4.1/taskHistory/fileSnapshots.bin&#10;#&#9;.gradle/3.4.1/taskHistory/taskHistory.bin&#10;#&#9;.gradle/3.4.1/taskHistory/taskHistory.lock&#10;#&#9;client/src/app/employee-calendar/employee-calendar.component.html&#10;#&#9;client/src/app/employee-calendar/employee-calendar.component.ts">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/src/app/my-event.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/src/app/my-event/my-event.component.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/src/app/my-event/my-event.component.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/src/app/my-event/my-event.component.spec.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/src/app/my-event/my-event.component.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4.1/fileContent/fileContent.lock" afterPath="$PROJECT_DIR$/.gradle/3.4.1/fileContent/fileContent.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/taskHistory.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/taskHistory.lock" />
+    <list default="true" id="21585d29-a524-4e1b-8b1e-37e9777324ea" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/app.module.ts" afterPath="$PROJECT_DIR$/client/src/app/app.module.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/employee-calendar/employee-calendar.component.html" afterPath="$PROJECT_DIR$/client/src/app/employee-calendar/employee-calendar.component.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -37,66 +26,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="employee-calendar.component.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="employee-calendar.component.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/src/app/employee-calendar/employee-calendar.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="26" column="33" lean-forward="false" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
+            <state relative-caret-position="630">
+              <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="my-event.component.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/my-event/my-event.component.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="my-event.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/my-event.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.module.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/src/app/app.module.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="47" lean-forward="false" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="my-event.component.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/my-event/my-event.component.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding>
-                <element signature="e#1#43#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="my-event.component.spec.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/my-event/my-event.component.spec.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#73#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -1327,7 +1262,7 @@
               <item name="client" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="employee-calendar" type="462c0819:PsiDirectoryNode" />
+              <item name="dialog-modal" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="techlauncher" type="b2602c69:ProjectViewProjectNode" />
@@ -1335,7 +1270,7 @@
               <item name="client" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="my-event" type="462c0819:PsiDirectoryNode" />
+              <item name="employee-calendar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="techlauncher" type="b2602c69:ProjectViewProjectNode" />
@@ -1504,7 +1439,7 @@
       <workItem from="1522473283299" duration="8833000" />
       <workItem from="1522488340021" duration="183000" />
       <workItem from="1522489632585" duration="2296000" />
-      <workItem from="1523592639799" duration="1805000" />
+      <workItem from="1523592639799" duration="4283000" />
     </task>
     <task id="LOCAL-00001" summary="initialize data base">
       <created>1522206777261</created>
@@ -1569,11 +1504,18 @@
       <option name="project" value="LOCAL" />
       <updated>1522488437865</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add reasons">
+      <created>1523595369468</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1523595369468</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44262000" />
+    <option name="totallyTimeSpent" value="46740000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -1869,7 +1811,8 @@
     <MESSAGE value="clean up" />
     <MESSAGE value="miss push" />
     <MESSAGE value="Merge branch 'atlas'&#10;&#10;# Conflicts:&#10;#&#9;.gradle/3.4.1/fileContent/fileContent.lock&#10;#&#9;.gradle/3.4.1/taskHistory/fileHashes.bin&#10;#&#9;.gradle/3.4.1/taskHistory/fileSnapshots.bin&#10;#&#9;.gradle/3.4.1/taskHistory/taskHistory.bin&#10;#&#9;.gradle/3.4.1/taskHistory/taskHistory.lock&#10;#&#9;client/src/app/employee-calendar/employee-calendar.component.html&#10;#&#9;client/src/app/employee-calendar/employee-calendar.component.ts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'atlas'&#10;&#10;# Conflicts:&#10;#&#9;.gradle/3.4.1/fileContent/fileContent.lock&#10;#&#9;.gradle/3.4.1/taskHistory/fileHashes.bin&#10;#&#9;.gradle/3.4.1/taskHistory/fileSnapshots.bin&#10;#&#9;.gradle/3.4.1/taskHistory/taskHistory.bin&#10;#&#9;.gradle/3.4.1/taskHistory/taskHistory.lock&#10;#&#9;client/src/app/employee-calendar/employee-calendar.component.html&#10;#&#9;client/src/app/employee-calendar/employee-calendar.component.ts" />
+    <MESSAGE value="add reasons" />
+    <option name="LAST_COMMIT_MESSAGE" value="add reasons" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2085,14 +2028,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/employee-calendar/employee-calendar.component.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/app.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -2102,14 +2037,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/employee-calendar/employee-calendar.component.spec.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/dialog-modal/dialog-modal.component.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -2132,14 +2059,6 @@
           <folding>
             <element signature="e#0#73#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/dialog-modal/dialog-modal.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2205,10 +2124,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/employee-calendar/employee-calendar.component.html">
+    <entry file="file://$PROJECT_DIR$/client/src/app/app.module.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="26" column="33" lean-forward="false" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
+        <state relative-caret-position="90">
+          <caret line="6" column="47" lean-forward="false" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -2229,10 +2148,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/app.module.ts">
+    <entry file="file://$PROJECT_DIR$/client/src/app/dialog-modal/dialog-modal.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="47" lean-forward="false" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/dialog-modal/dialog-modal.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/employee-calendar/employee-calendar.component.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/employee-calendar/employee-calendar.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding />
         </state>
       </provider>
