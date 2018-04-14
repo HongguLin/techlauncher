@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import 'fullcalendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { MyEvent} from '../my-event';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-employee-calendar',
@@ -87,7 +88,8 @@ export class EmployeeCalendarComponent implements OnInit {
   }
 
   ngOnInit() {
-	  this.getPublicHoliday();
+    this.getPublicHoliday();
+
 
   }
 
