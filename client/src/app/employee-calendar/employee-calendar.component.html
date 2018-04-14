@@ -9,21 +9,24 @@
 </div>
 <div class="modal-body">
   <!-- From date unavailability  -->
-
-  <!-- <div class="col-4">
-    <input type="radio" name="repeat" aria-label="Radio button for following text input">
-    </div> -->
-
   <div class="form-group row">
-    <label for="example-date-input" class="col-4 col-form-label">From:</label>
-    <div class="col-8">
+   <div class="col-4">
+    <input type="radio" name="repeat" aria-label="Radio button for following text input">
+    </div>
+
+    <label for="example-date-input" class="col-2 col-form-label">From:</label>
+    <div class="col-6">
       <input class="form-control" type="date" [(ngModel)]="fromDate" id="example-date-input">
     </div>
+
   </div>
+  
   <!-- To date unavailability  -->
   <div class="form-group row">
-    <label for="example-date-input" class="col-4 col-form-label">To:</label>
-    <div class="col-8">
+    <div class="col-4">
+    </div>
+    <label for="example-date-input" class="col-2 col-form-label">To:</label>
+    <div class="col-6">
       <input class="form-control" type="date" [(ngModel)]="toDate" (ngModelChange)="toDateChange($event)" id="example-date-input">
     </div>
   </div>
@@ -41,17 +44,14 @@
        
         <label for="example-date-input" class="col-2 col-form-label">Repeat</label>
       
-        <div class="col-3">  
-  <!-- validation for repeat weeks -->           
+        <div class="col-4">  
+  <!-- validation for repeat weeks, only numbers are allowed -->           
         <form name="myForm">
         <input name="input" 
          ng-model="userInput" class="form-control" 
          aria-label="Text input with radio button"
          placeholder="0"
          type="number" min="0" max="53" required number>
-         <span class="validity"></span>
-
-        <br>
         </form>
         </div>
         <div class="col-2 col-form-label">Weeks</div>     
