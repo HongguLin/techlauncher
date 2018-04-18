@@ -11,6 +11,17 @@ class Employee {
         employee_id blank:false
     }
 
+    static mapping = {
+        table 'employee'
+        version false
+        id generator: 'assigned', name: "employee_id"
+    }
+
+    def beforeInsert() {
+        employee_id=1
+    }
+
+
     String toString() {
         employee_name
     }
