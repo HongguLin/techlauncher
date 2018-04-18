@@ -16,6 +16,7 @@ export class EmployeeCalendarComponent implements OnInit {
 
   // #colon is for type and = is assignment
 	holidays : any;
+  npds: any;
   fromDate :Date;
   toDate :Date;
   events = ['select', 'RDO', 'Annual Leave', 'Sick Leave', 'Other'];
@@ -36,11 +37,17 @@ export class EmployeeCalendarComponent implements OnInit {
 			this.holidays = data;
 			this.displayCalendar()
 		});
+	}
 
+	getNonProductiveDay() {
+		this.http.get('http://localhost:8080/npd?max=30').subscribe(data => {
+			this.npds = data;
+			this.displayCalendar()
+		});
 	}
 
 	saveEvent(){
-		this.npd = new Npd(this.fromDate, this.toDate, this.model.event);
+		//this.npd = new Npd(this.fromDate, this.toDate, this.model.event);
 		this.http.post('http://localhost:8080/npd', this.npd)
 			.subscribe(res => {
 					let id = res['id'];
@@ -66,6 +73,9 @@ export class EmployeeCalendarComponent implements OnInit {
 	  console.log(this.npd.start);
 	  console.log(this.npd.end);
 	  console.log(this.npd.reason);
+	  this.saveEvent();
+	  this.getNonProductiveDay();
+	  /*
 	  this.http.post('http://localhost:8080/npd', this.npd)
 		  .subscribe(res => {
 				  let id = res['id'];
@@ -73,6 +83,7 @@ export class EmployeeCalendarComponent implements OnInit {
 				  console.log(err);
 			  }
 		  );
+		  */
 
 
   }
@@ -85,6 +96,16 @@ export class EmployeeCalendarComponent implements OnInit {
 			  end: holiday.end.split('T')[0]
 			}
 	  });
+
+		var nds = this.npds.map(npd => {
+			return {
+				title: npd.reason,
+				start: npd.start.split('T')[0],
+				end: npd.end.split('T')[0]
+			}
+		});
+
+		var allEvents = hds.concat(nds);
 
 		$('#calendar').fullCalendar({
 			header: {
@@ -102,7 +123,7 @@ export class EmployeeCalendarComponent implements OnInit {
 
 			displayEventTime: false, // don't show the time column in list view
 
-			events: hds,
+			events: allEvents,
 
 			loading: function(bool) {
 				$('#loading').toggle(bool);
@@ -116,6 +137,7 @@ export class EmployeeCalendarComponent implements OnInit {
 
   ngOnInit() {
 	  this.getPublicHoliday();
+	  this.getNonProductiveDay();
 
   }
 
