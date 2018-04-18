@@ -3,7 +3,7 @@ import grails.rest.*
 
 @Resource(uri='/npd')
 class NonProductiveDay {
-    int npd_id
+    Integer npd_id
     Date start
     Date end
     String reason
@@ -15,12 +15,9 @@ class NonProductiveDay {
     static mapping = {
         table 'non_productive_day'
         version false
-        id generator: 'increment', name: 'npd_id'
+        id name: "npd_id"
     }
 
-    //def beforeInsert() {
-        //npd_id=1
-    //}
 
     String toString() {
         reason
