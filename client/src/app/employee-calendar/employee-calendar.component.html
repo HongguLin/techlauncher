@@ -31,28 +31,30 @@
   <hr>
 
   <!-- Repeat Option  -->
+
   <div class="form-group row">
     
       <div class="input-group">
         
         <div class="col-4">
-          <input type="radio" name="repeat" aria-label="Radio button for following text input">
+          <input type="radio" name="repeat" (click)="radioBtn1='repeat'" aria-label="Radio button for following text input">
         </div>
         
         <label for="example-date-input" class="col-2 col-form-label">Repeat</label>
       <div class="col-2">
-        <input type="text" class="form-control" aria-label="Text input with radio button" value=0>
+        <input type="number" [(ngModel)]="repeatVal" class="form-control" placeholder="0">
       </div>
         <div class="col-2 col-form-label">Weeks</div>     
     </div>
   </div>
+
 
   <hr>
 
   <!-- Repeat Always  -->
   <div class="form-group row">
       <div class="col-4">
-    <input type="radio" name="repeat" aria-label="Radio button for following text input" value='always'>
+    <input type="radio" name="repeat" (click)="radioBtn1='always'"  aria-label="Radio button for following text input" value='always'>
       </div>     
         <label for="example-date-input" class="col-4 col-form-label">Repeat Always</label>    
   </div> 
