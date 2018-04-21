@@ -44,7 +44,7 @@ export class EmployeeCalendarComponent implements OnInit {
        
         start: this.fromDate,
         end: this.toDate,
-        color: '#424bf4',
+        color: '#cc0000',
         textColor: 'white',
     });
   }
