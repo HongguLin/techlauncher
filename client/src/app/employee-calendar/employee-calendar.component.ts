@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import 'fullcalendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { MyEvent} from '../my-event';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+
 
 @Component({
   selector: 'app-employee-calendar',
@@ -11,7 +11,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./employee-calendar.component.css']
 })
 export class EmployeeCalendarComponent implements OnInit {
-  @ViewChild("content") dialogModal: TemplateRef<any>
+  @ViewChild("content") dialogModal: TemplateRef<any>;
 
   // #colon is for type and = is assignment
 	holidays : any;
@@ -32,13 +32,25 @@ export class EmployeeCalendarComponent implements OnInit {
 	getPublicHoliday() {
 		this.http.get('http://localhost:8080/holidays?max=30').subscribe(data => {
 			this.holidays = data;
-			this.displayCalendar()
+			this.displayCalendar();
 		});
 
 	}
 
-  addEvents(){
-    console.log('hello')
+  addEvents() {
+    console.log('hello');
+    
+    $('#calendar').fullCalendar('renderEvent', {
+      title: this.model.event,
+       
+        start: this.fromDate,
+        end: this.toDate,
+        color: '#F34242',
+        textColor: 'white',
+    });
+  }
+  recuringEvents() {
+    console.log('add recursive event');
     
     $('#calendar').fullCalendar('renderEvent', {
       title: this.model.event,
@@ -49,6 +61,8 @@ export class EmployeeCalendarComponent implements OnInit {
         textColor: 'white',
     });
   }
+
+
 
 	displayCalendar(){
   	var hds = this.holidays.map(holiday => {
@@ -70,7 +84,7 @@ export class EmployeeCalendarComponent implements OnInit {
         this.fromDate = data.format();
         this.toDate = data.format();
         this.modalService.open(this.dialogModal);
-        console.log('from', this.fromDate)
+        console.log('from', this.fromDate);
       },
 
 			displayEventTime: false, // don't show the time column in list view
@@ -84,7 +98,7 @@ export class EmployeeCalendarComponent implements OnInit {
   }
 
   toDateChange(event) {
-    console.log('to', this.toDate)
+    console.log('to', this.toDate);
   }
 
   ngOnInit() {
