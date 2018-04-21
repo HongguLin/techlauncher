@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="21585d29-a524-4e1b-8b1e-37e9777324ea" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4.1/fileContent/fileContent.lock" afterPath="$PROJECT_DIR$/.gradle/3.4.1/fileContent/fileContent.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/taskHistory.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/3.4.1/taskHistory/taskHistory.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/employee-calendar/employee-calendar.component.ts" afterPath="$PROJECT_DIR$/client/src/app/employee-calendar/employee-calendar.component.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/grails-app/controllers/com/tradeup/EmployeeController.groovy" afterPath="$PROJECT_DIR$/server/grails-app/controllers/com/tradeup/EmployeeController.groovy" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -1488,7 +1481,7 @@
       <workItem from="1523632042416" duration="4516000" />
       <workItem from="1524034062473" duration="12183000" />
       <workItem from="1524123597617" duration="616000" />
-      <workItem from="1524283614757" duration="1048000" />
+      <workItem from="1524283614757" duration="1172000" />
     </task>
     <task id="LOCAL-00001" summary="initialize data base">
       <created>1522206777261</created>
@@ -1588,11 +1581,18 @@
       <option name="project" value="LOCAL" />
       <updated>1524065230210</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="fix one day event problem in Jie's branch">
+      <created>1524285297016</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1524285297016</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75142000" />
+    <option name="totallyTimeSpent" value="75266000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -1919,7 +1919,8 @@
     <MESSAGE value="with post error" />
     <MESSAGE value="can add data from front-end to database now" />
     <MESSAGE value="display the new add events" />
-    <option name="LAST_COMMIT_MESSAGE" value="display the new add events" />
+    <MESSAGE value="fix one day event problem in Jie's branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix one day event problem in Jie's branch" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
