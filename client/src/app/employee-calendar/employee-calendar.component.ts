@@ -2,7 +2,7 @@ import {Component, Input, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'fullcalendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { MyEvent} from '../my-event';
+import {MyEvent} from '../my-event';
 import {Npd} from '../npd';
 import {Router} from "@angular/router";
 import {debounceTime} from "rxjs/operator/debounceTime";
@@ -166,9 +166,6 @@ export class EmployeeCalendarComponent implements OnInit {
 
         $("#calendar").fullCalendar('removeEvents');
         $("#calendar").fullCalendar('addEventSource', allEvents);
-
-
-
   }
 
   toDateChange(event) {
@@ -178,7 +175,6 @@ export class EmployeeCalendarComponent implements OnInit {
   ngOnInit() {
 	  this.getPublicHoliday();
 	  this.getNonProductiveDay();
-
   }
 
 }

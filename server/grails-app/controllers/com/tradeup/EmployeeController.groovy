@@ -8,11 +8,6 @@ import groovy.sql.Sql
 
 class EmployeeController {
 	static responseFormats = ['json', 'xml']
-
-    def dbURL = 'jdbc:mysql://localhost:3306/tradeup'
-    def dbUserName = 'root'
-    def dbPassword = '1234'
-    def dbDriver = 'com.mysql.jdbc.Driver'
 	
     def index() { }
 
