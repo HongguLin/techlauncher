@@ -16,6 +16,7 @@ class EmployeeController {
 	
     def index() { }
 
+    //never used
     def get() {
         def allEmployees = []
         try {

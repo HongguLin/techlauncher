@@ -86,7 +86,7 @@ export class EmployeeCalendarComponent implements OnInit {
 	} else if (this.radioBtn1 == 'repeat') {
         this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.repeatVal);
 	} else {
-        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, 0);
+        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, 1);
 	}
 
 	  this.saveEvent();
