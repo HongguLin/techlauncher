@@ -2,10 +2,13 @@ import {Component, Input, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'fullcalendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 import {MyEvent} from '../my-event';
 import {Npd} from '../npd';
 import {Router} from "@angular/router";
 import {debounceTime} from "rxjs/operator/debounceTime";
+
+import { NgModel } from '@angular/forms';
 
 
 @Component({
@@ -15,6 +18,8 @@ import {debounceTime} from "rxjs/operator/debounceTime";
 })
 export class EmployeeCalendarComponent implements OnInit {
   @ViewChild("content") dialogModal: TemplateRef<any>
+
+  @ViewChild("deletePopWindow") deleteModal: TemplateRef<any>
 
   // #colon is for type and = is assignment
 	holidays : any;
@@ -76,8 +81,9 @@ export class EmployeeCalendarComponent implements OnInit {
       title: this.model.event,
 	    start: this.fromDate,
 	    end: this.toDate,
-	    color: '#424bf4',
+	    color: '#cc0000',
 	    textColor: 'white',
+
     });
 
 
@@ -153,6 +159,11 @@ export class EmployeeCalendarComponent implements OnInit {
         this.toDate = data.format();
         this.modalService.open(this.dialogModal);
         console.log('from', this.fromDate)
+      },
+      
+      eventClick: (calEvent, jsEvent, view) => {
+        // alert('Event: ' + calEvent.title);
+        this.modalService.open(this.deleteModal);  
       },
 
             displayEventTime: false, // don't show the time column in list view
