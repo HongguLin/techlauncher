@@ -7,12 +7,13 @@
 4. Install [Grails 3] `brew install gradle`
 5. Install database: `brew install database`
 6. Install [Git](https://git-scm.com/downloads) and clone the repository
-7. Connect to the calendar database: mysql --user=root --password '1234'
-8. Open mysql `mysql`;
-9. Create database tradeup for this project: `CREATE DATABASE tradeup;`
-10. type `use tradeup;`
-11. Go to the file directory that contain initialise.sql and public_holiday.sql and then go into mysql
-12. Type `source initialise.sql` and `source public_holiday.sql;`
+7. Connect to the calendar database: mysql -u root -p
+8. enter password 1234
+9. Open mysql `mysql`;
+10. Create database tradeup for this project: `CREATE DATABASE tradeup;`
+11. type `use tradeup;`
+12. Go to the file directory that contain initialise.sql and public_holiday.sql and then go into mysql
+13. cd to the correct folder and enter `source initialise.sql` and `source public_holiday.sql;`
 
 ### Development Workflow
 go to the project directory
