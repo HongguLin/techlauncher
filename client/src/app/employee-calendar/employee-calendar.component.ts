@@ -2,12 +2,8 @@ import {Component, Input, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'fullcalendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
 import {MyEvent} from '../my-event';
 import {Npd} from '../npd';
-import {Router} from "@angular/router";
-import {debounceTime} from "rxjs/operator/debounceTime";
-
 import { NgModel } from '@angular/forms';
 
 
@@ -89,24 +85,13 @@ export class EmployeeCalendarComponent implements OnInit {
 
     if (this.radioBtn1 == 'always') {
         this.npd = new Npd(this.fromDate, this.toDate, this.model.event, 100);
-	} else if (this.radioBtn1 == 'repeat') {
+		} else if (this.radioBtn1 == 'repeat') {
         this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.repeatVal);
-	} else {
+		} else {
         this.npd = new Npd(this.fromDate, this.toDate, this.model.event, 1);
-	}
+		}
 
 	  this.saveEvent();
-	  /*
-	  this.http.post('http://localhost:8080/npd', this.npd)
-		  .subscribe(res => {
-				  let id = res['id'];
-			  }, (err) => {
-				  console.log(err);
-			  }
-		  );
-		  */
-
-
   }
 
 	displayCalendar(){
@@ -114,45 +99,46 @@ export class EmployeeCalendarComponent implements OnInit {
   		return {
 			  title: holiday.name,
 			  start: holiday.start.split('T')[0],
-			  end: holiday.end.split('T')[0]
+			  end: holiday.end.split('T')[0],
 			}
 	  });
 
-        if (this.npds != null) {
-            var ndsWithRepeat = this.npds.map(npd => {
-                    return {
-                        title: npd.reason,
-                        start: npd.start.split('T')[0],
-                        end: npd.end.split('T')[0],
-                        repeat: npd.repeatDays
-                    }
-            });
+		if (this.npds != null) {
+			var ndsWithRepeat = this.npds.map(npd => {
+				return {
+					title: npd.reason,
+					start: npd.start.split('T')[0],
+					end: npd.end.split('T')[0],
+					repeat: npd.repeatDays
+				}
+			});
 
-            var nds = [];
-            for (var i = 0; i < ndsWithRepeat.length; i++) {
-            	for (var j = 0; j < ndsWithRepeat[i].repeat; j++) {
-            		var startDate = new Date(ndsWithRepeat[i].start);
+			var nds = [];
+			for (var i = 0; i < ndsWithRepeat.length; i++) {
+				for (var j = 0; j < ndsWithRepeat[i].repeat; j++) {
+					var startDate = new Date(ndsWithRepeat[i].start);
 					var endDate = new Date(ndsWithRepeat[i].end);
 
 					startDate.setDate(startDate.getDate() + j * 7);
 					endDate.setDate(endDate.getDate() + j * 7);
 
-            		nds.push({
+					nds.push({
 						title: ndsWithRepeat[i].title,
 						start: startDate,
-						end:   endDate
+						end:   endDate,
+						color: '#cc0000',
 					})
 				}
 			}
-        }
+		}
 
-        var allEvents = hds.concat(nds);
-        $('#calendar').fullCalendar( {
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,listYear'
-            },
+		var allEvents = hds.concat(nds);
+		$('#calendar').fullCalendar( {
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,listYear'
+			},
 
       dayClick: (data, jsEvent, view) => {
         this.fromDate = data.format();
@@ -166,17 +152,17 @@ export class EmployeeCalendarComponent implements OnInit {
         this.modalService.open(this.deleteModal);  
       },
 
-            displayEventTime: false, // don't show the time column in list view
+			displayEventTime: false, // don't show the time column in list view
 
-            events: allEvents,
+			events: allEvents,
 
-            loading: function(bool) {
-                $('#loading').toggle(bool);
-            }
-        });
+			loading: function(bool) {
+				$('#loading').toggle(bool);
+			}
+		});
 
-        $("#calendar").fullCalendar('removeEvents');
-        $("#calendar").fullCalendar('addEventSource', allEvents);
+		$("#calendar").fullCalendar('removeEvents');
+		$("#calendar").fullCalendar('addEventSource', allEvents);
   }
 
   toDateChange(event) {
