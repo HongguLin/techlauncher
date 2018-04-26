@@ -44,8 +44,9 @@
           <element id="library" level="project" name="Gradle: org.glassfish.web:el-impl:2.1.2-b03" />
           <element id="library" level="project" name="Gradle: org.slf4j:log4j-over-slf4j:1.7.25" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot:1.5.10.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jdbc:8.5.27" />
+          <element id="library" level="project" name="Gradle: mysql:mysql-connector-java:5.1.40" />
           <element id="library" level="project" name="Gradle: org.codehaus.groovy:groovy:2.4.14" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-jdbc:8.5.27" />
           <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.25" />
           <element id="library" level="project" name="Gradle: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" />
           <element id="library" level="project" name="Gradle: com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.4.2" />
@@ -95,10 +96,10 @@
           <element id="library" level="project" name="Gradle: org.springframework:spring-expression:4.3.14.RELEASE" />
           <element id="library" level="project" name="Gradle: org.codehaus.groovy:groovy-xml:2.4.14" />
           <element id="library" level="project" name="Gradle: org.codehaus.groovy:groovy-templates:2.4.14" />
-          <element id="library" level="project" name="Gradle: javax.el:el-api:2.1.2-b03" />
           <element id="library" level="project" name="Gradle: org.yaml:snakeyaml:1.17" />
-          <element id="library" level="project" name="Gradle: javax.transaction:jta:1.1" />
+          <element id="library" level="project" name="Gradle: javax.el:el-api:2.1.2-b03" />
           <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-juli:8.5.27" />
+          <element id="library" level="project" name="Gradle: javax.transaction:jta:1.1" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.8.10" />
           <element id="library" level="project" name="Gradle: org.apache.tomcat:tomcat-annotations-api:8.5.27" />
           <element id="library" level="project" name="Gradle: org.grails:grails-web-databinding:3.3.3" />
@@ -134,7 +135,6 @@
           <element id="library" level="project" name="Gradle: org.grails:grails-taglib:3.3.1" />
           <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.1.0.Final" />
           <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.2" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/5.1.40/ef2a2ceab1735eaaae0b5d1cccf574fb7c6e1c52/mysql-connector-java-5.1.40.jar" />
         </element>
       </element>
     </root>

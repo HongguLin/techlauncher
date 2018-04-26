@@ -1,3 +1,15 @@
+<!-- Employee dropdown -->
+<div class="col">
+  <label class="col-4 col-form-label">Select Employee: </label>
+  <div class="col-4">
+    <select class="form-control" [(ngModel)]="selectedEmployeeId" ng-change='getnpds()' required>
+      <option *ngFor="let e of employees" [value]="e.employee_id" ng-selected="e.employee_id == selectedEmployeeId">{{e.employee_name}}</option>
+    </select>
+  </div>
+  <p>You selected: {{selectedEmployeeId}}</p>
+</div>
+
+
 <div id='calendar'></div>
 
 <ng-template #content let-c="close" let-d="dismiss">
@@ -33,19 +45,13 @@
   <!-- Repeat Option  -->
 
   <div class="form-group row">
-    
       <div class="input-group">
-        
         <div class="col-4">
           <input type="radio" name="repeat" (click)="radioBtn1='repeat'" aria-label="Radio button for following text input">
         </div>
-        
         <label for="example-date-input" class="col-2 col-form-label">Repeat</label>
       <div class="col-2">
-
         <input type="number" [(ngModel)]="repeatVal" class="form-control" placeholder="0">
-
-
       </div>
         <div class="col-2 col-form-label">Weeks</div>     
     </div>
@@ -101,11 +107,9 @@
     </button>
   </div>
 
-  <!-- <div class="modal-body">
-  </div> -->
-  
   <div class="modal-footer">
     <!-- need a button for Confirm(submit function) here-->
+    <button type="button" class="btn btn-primary" id="deletebtn" (click)="deleteEvent();c('Close click')">Confirm</button>
     <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
   </div>
   </ng-template>

@@ -5,6 +5,10 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MyEvent} from '../my-event';
 import {Npd} from '../npd';
 import { NgModel } from '@angular/forms';
+import {ActivatedRoute, Router } from '@angular/router';
+import {forEach} from "@angular/router/src/utils/collection";
+import {setTimeout} from "timers";
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -18,83 +22,101 @@ export class EmployeeCalendarComponent implements OnInit {
   @ViewChild("deletePopWindow") deleteModal: TemplateRef<any>
 
   // #colon is for type and = is assignment
+	employees: any;
 	holidays : any;
-  npds: any;
+	npdIDs:any[];
+  npds = [];
   fromDate :Date;
   toDate :Date;
   events = ['select', 'RDO', 'Annual Leave', 'Sick Leave', 'Other'];
   public model = new MyEvent(this.events[0]);
   radioBtn1: String;
   repeatVal: 0;
-  npd = new Npd(this.fromDate, this.toDate, this.model.event, 0);
-  initial: number;
+	initial: number;
+	selectedEmployeeId:number;
+  npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
+
 
   constructor(
     private http: HttpClient,
     private modalService: NgbModal
   ) {
       this.repeatVal = 0;
-      this.npd       = new Npd(this.fromDate, this.toDate, this.model.event, 0);
+      this.npd       = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
       this.initial   = -1;
+      this.selectedEmployeeId=1;
   }
 
-  //newEvent() {
-		//this.model = new MyEvent('');
-	//}
 
 	getPublicHoliday() {
 		this.http.get('http://localhost:8080/holidays?max=30').subscribe(data => {
 			this.holidays = data;
-			this.displayCalendar()
+			//this.displayCalendar()
+
 		});
 	}
 
-	getNonProductiveDay() {
-		this.http.get('http://localhost:8080/npd?max=30').subscribe(data => {
-			this.npds = data;
-			this.displayCalendar()
+	getEmployee(){
+		this.http.get('http://localhost:8080/employee?max=30').subscribe(data=>{
+			this.employees = data;
+			this.getnpds();
+			this.displayCalendar();
+
+			//console.log(this.employees);
 		});
+	}
+
+
+	getnpd(i){
+		this.http.get('http://localhost:8080/npd/'+i).subscribe(data=>{
+			this.npds.push(data);
+			console.log(this.npds)
+		});
+	}
+
+	getnpds(){
+  	this.http.get('http://localhost:8080/employee/'+this.selectedEmployeeId).subscribe(data=>{
+  		this.npdIDs = data['npds'];
+		  console.log(this.npdIDs);
+		  this.npdIDs.forEach(data =>{
+			  var i = data['npd_id'];
+			  console.log(i);
+			  this.getnpd(i);
+		  });
+	  });
+	}
+
+	deleteEvent(id) {
+		this.http.delete('http://localhost:8080/npd/'+id)
+			.subscribe(res => {let id = res['id'];}, (err) => {console.log(err);});
 	}
 
 	saveEvent(){
-		//this.npd = new Npd(this.fromDate, this.toDate, this.model.event);
 		this.http.post('http://localhost:8080/npd', this.npd)
-			.subscribe(res => {
-					let id = res['id'];
+			.subscribe(res => {let id = res['id'];
 				}, (err) => {
 					console.log(err);
 				},
-                () => {
-                    this.getNonProductiveDay();
-                }
+				() => {
+					this.getnpds();
+				}
 			);
 	}
 
   addEvent(){
-    console.log('hello')
-    
-    $('#calendar').fullCalendar('renderEvent', {
-      title: this.model.event,
-	    start: this.fromDate,
-	    end: this.toDate,
-	    color: '#cc0000',
-	    textColor: 'white',
-
-    });
-
 
     if (this.radioBtn1 == 'always') {
-        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, 100);
+        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 100);
 		} else if (this.radioBtn1 == 'repeat') {
-        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.repeatVal);
+        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, this.repeatVal);
 		} else {
-        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, 1);
+        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 1);
 		}
-
 	  this.saveEvent();
   }
 
 	displayCalendar(){
+		console.log('f2');
   	var hds = this.holidays.map(holiday => {
   		return {
 			  title: holiday.name,
@@ -165,13 +187,14 @@ export class EmployeeCalendarComponent implements OnInit {
 		$("#calendar").fullCalendar('addEventSource', allEvents);
   }
 
-  toDateChange(event) {
-    console.log('to', this.toDate)
-  }
+  //toDateChange(event) {
+    //console.log('to', this.toDate)
+  //}
 
   ngOnInit() {
 	  this.getPublicHoliday();
-	  this.getNonProductiveDay();
+	  this.getEmployee();
+	  //this.getnpds();
   }
 
 }

@@ -9,16 +9,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/../../../server/src/main/webapp" relative="/" />
         </webroots>
-        <sourceRoots>
-          <root url="file://$MODULE_DIR$/../../../server/src/main/resources" />
-          <root url="file://$MODULE_DIR$/../../../server/grails-app/controllers" />
-          <root url="file://$MODULE_DIR$/../../../server/src/main/groovy" />
-          <root url="file://$MODULE_DIR$/../../../server/grails-app/init" />
-          <root url="file://$MODULE_DIR$/../../../server/grails-app/conf" />
-          <root url="file://$MODULE_DIR$/../../../server/grails-app/views" />
-          <root url="file://$MODULE_DIR$/../../../server/src/main/java" />
-          <root url="file://$MODULE_DIR$/../../../server/grails-app/i18n" />
-        </sourceRoots>
       </configuration>
     </facet>
   </component>
@@ -130,8 +120,8 @@
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-templates:2.4.14" level="project" />
     <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: javax.el:el-api:2.1.2-b03" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.tomcat:tomcat-juli:8.5.27" level="project" />
     <orderEntry type="library" name="Gradle: javax.transaction:jta:1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.apache.tomcat:tomcat-juli:8.5.27" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.8.10" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat:tomcat-annotations-api:8.5.27" level="project" />
     <orderEntry type="library" name="Gradle: org.grails:grails-web-databinding:3.3.3" level="project" />

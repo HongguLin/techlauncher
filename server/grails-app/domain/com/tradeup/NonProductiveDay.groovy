@@ -10,6 +10,7 @@ class NonProductiveDay {
     Date end
     Integer repeatDays;
     String reason
+    static belongsTo = [employee:Employee]
 
     static constraints = {
         npd_id blank:false

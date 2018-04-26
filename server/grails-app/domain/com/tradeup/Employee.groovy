@@ -5,6 +5,8 @@ import grails.rest.*
 class Employee {
     Integer employee_id
     String employee_name
+    static belongsTo = [project:Project]
+    static hasMany = [npds:NonProductiveDay, wds:WorkDay]
 
     static constraints = {
         employee_name blank:false
