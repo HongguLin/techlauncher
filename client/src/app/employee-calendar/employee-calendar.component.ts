@@ -7,7 +7,6 @@ import {Npd} from '../npd';
 import { NgModel } from '@angular/forms';
 import {ActivatedRoute, Router } from '@angular/router';
 import {forEach} from "@angular/router/src/utils/collection";
-import {setTimeout} from "timers";
 import {Observable} from "rxjs/Observable";
 
 
@@ -35,6 +34,7 @@ export class EmployeeCalendarComponent implements OnInit {
 	initial: number;
 	selectedEmployeeId:number;
   npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
+  deletedEvent: any;
 
 
   constructor(
@@ -45,6 +45,7 @@ export class EmployeeCalendarComponent implements OnInit {
       this.npd       = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
       this.initial   = -1;
       this.selectedEmployeeId=1;
+      this.deletedEvent = [];
   }
 
 
@@ -95,9 +96,39 @@ export class EmployeeCalendarComponent implements OnInit {
 	  });
 	}
 
-	deleteEvent(id) {
-		this.http.delete('http://localhost:8080/npd/'+id)
-			.subscribe(res => {let id = res['id'];}, (err) => {console.log(err);});
+	deleteEvent() {
+		// we need to get employee id and its npd values
+		// then compare all npd with the selected values
+		// finally we can get its id.
+
+		var npd_id = this.npds.map(npd =>
+		{
+			var npd_start    = new Date(npd.start);
+			var delete_start = new Date(this.deletedEvent.start);
+			var npd_end      = new Date(npd.end);
+			var delete_end   = new Date(this.deletedEvent.end);
+
+			if (npd.reason == this.deletedEvent.title &&
+					npd_start.toDateString() == delete_start.toDateString() &&
+					npd_end.toDateString() == delete_end.toDateString()) {
+				return npd.npd_id;
+			}
+		});
+
+		// get the first matched result from a list.
+        for (var i = 0; i < npd_id.length; i++) {
+        	if (npd_id[i] != undefined)
+        		var id = npd_id[i];
+        }
+
+
+        // execute http delete and flush the page as well
+		this.http.delete('http://localhost:8080/npd/' + id)
+			.subscribe(res => {},
+				(err) => {console.log(err);},
+				() => {
+				this.getnpds();
+				});
 	}
 
 	saveEvent(){
@@ -180,6 +211,10 @@ export class EmployeeCalendarComponent implements OnInit {
       
       eventClick: (calEvent, jsEvent, view) => {
         // alert('Event: ' + calEvent.title);
+		  this.deletedEvent.title = calEvent.title;
+		  this.deletedEvent.start = calEvent.start._d;
+		  this.deletedEvent.end   = calEvent.end._d;
+
         this.modalService.open(this.deleteModal);  
       },
 
