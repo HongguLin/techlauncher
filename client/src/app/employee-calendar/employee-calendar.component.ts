@@ -76,16 +76,22 @@ export class EmployeeCalendarComponent implements OnInit {
 	}
 
 	getnpds(){
+		this.npds=[];
   	this.http.get('http://localhost:8080/employee/'+this.selectedEmployeeId).subscribe(data=>{
   		this.npdIDs = data['npds'];
 		  console.log(this.npdIDs);
 		  var index = 0;
-		  this.npdIDs.forEach(data =>{
-		  	index ++;
-			  var i = data['npd_id'];
-			  console.log(i);
-			  this.getnpd(i,index,this.npdIDs.length);
-		  });
+		  if(this.npdIDs.length!=0){
+			  this.npdIDs.forEach(data =>{
+				  index ++;
+				  var i = data['npd_id'];
+				  console.log(i);
+				  this.getnpd(i,index,this.npdIDs.length);
+			  });
+		  }else {
+		  	this.displayCalendar()
+		  }
+
 	  });
 	}
 
@@ -119,6 +125,7 @@ export class EmployeeCalendarComponent implements OnInit {
 
 	displayCalendar(){
 		console.log('f2');
+		$('#calendar').fullCalendar('removeEvents');
   	var hds = this.holidays.map(holiday => {
   		return {
 			  title: holiday.name,

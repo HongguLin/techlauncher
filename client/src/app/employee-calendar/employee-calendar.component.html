@@ -1,8 +1,9 @@
+
 <!-- Employee dropdown -->
 <div class="col">
   <label class="col-4 col-form-label">Select Employee: </label>
   <div class="col-4">
-    <select class="form-control" [(ngModel)]="selectedEmployeeId" ng-change='getnpds()' required>
+    <select class="form-control" [(ngModel)]="selectedEmployeeId" (ngModelChange)='getnpds()' required>
       <option *ngFor="let e of employees" [value]="e.employee_id" ng-selected="e.employee_id == selectedEmployeeId">{{e.employee_name}}</option>
     </select>
   </div>
