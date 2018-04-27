@@ -59,18 +59,19 @@ export class EmployeeCalendarComponent implements OnInit {
 	getEmployee(){
 		this.http.get('http://localhost:8080/employee?max=30').subscribe(data=>{
 			this.employees = data;
-			this.getnpds();
-			this.displayCalendar();
 
-			//console.log(this.employees);
+			this.getnpds();
 		});
 	}
 
 
-	getnpd(i){
+	getnpd(i,index,l){
 		this.http.get('http://localhost:8080/npd/'+i).subscribe(data=>{
 			this.npds.push(data);
 			console.log(this.npds)
+			if(index==l){
+				this.displayCalendar();
+			}
 		});
 	}
 
@@ -78,10 +79,12 @@ export class EmployeeCalendarComponent implements OnInit {
   	this.http.get('http://localhost:8080/employee/'+this.selectedEmployeeId).subscribe(data=>{
   		this.npdIDs = data['npds'];
 		  console.log(this.npdIDs);
+		  var index = 0;
 		  this.npdIDs.forEach(data =>{
+		  	index ++;
 			  var i = data['npd_id'];
 			  console.log(i);
-			  this.getnpd(i);
+			  this.getnpd(i,index,this.npdIDs.length);
 		  });
 	  });
 	}
@@ -104,7 +107,6 @@ export class EmployeeCalendarComponent implements OnInit {
 	}
 
   addEvent(){
-
     if (this.radioBtn1 == 'always') {
         this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 100);
 		} else if (this.radioBtn1 == 'repeat') {
