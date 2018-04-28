@@ -97,33 +97,7 @@ export class EmployeeCalendarComponent implements OnInit {
 	}
 
 	deleteEvent() {
-		// we need to get employee id and its npd values
-		// then compare all npd with the selected values
-		// finally we can get its id.
-
-		var npd_id = this.npds.map(npd =>
-		{
-			var npd_start    = new Date(npd.start);
-			var delete_start = new Date(this.deletedEvent.start);
-			var npd_end      = new Date(npd.end);
-			var delete_end   = new Date(this.deletedEvent.end);
-
-			if (npd.reason == this.deletedEvent.title &&
-					npd_start.toDateString() == delete_start.toDateString() &&
-					npd_end.toDateString() == delete_end.toDateString()) {
-				return npd.npd_id;
-			}
-		});
-
-		// get the first matched result from a list.
-        for (var i = 0; i < npd_id.length; i++) {
-        	if (npd_id[i] != undefined)
-        		var id = npd_id[i];
-        }
-
-
-        // execute http delete and flush the page as well
-		this.http.delete('http://localhost:8080/npd/' + id)
+		this.http.delete('http://localhost:8080/npd/' + this.deletedEvent.npd_id)
 			.subscribe(res => {},
 				(err) => {console.log(err);},
 				() => {
@@ -171,7 +145,8 @@ export class EmployeeCalendarComponent implements OnInit {
 					title: npd.reason,
 					start: npd.start.split('T')[0],
 					end: npd.end.split('T')[0],
-					repeat: npd.repeatDays
+					repeat: npd.repeatDays,
+					npd_id: npd.npd_id
 				}
 			});
 
@@ -189,6 +164,7 @@ export class EmployeeCalendarComponent implements OnInit {
 						start: startDate,
 						end:   endDate,
 						color: '#cc0000',
+						npd_id: ndsWithRepeat[i].npd_id
 					})
 				}
 			}
@@ -210,10 +186,7 @@ export class EmployeeCalendarComponent implements OnInit {
       },
       
       eventClick: (calEvent, jsEvent, view) => {
-        // alert('Event: ' + calEvent.title);
-		  this.deletedEvent.title = calEvent.title;
-		  this.deletedEvent.start = calEvent.start._d;
-		  this.deletedEvent.end   = calEvent.end._d;
+		  this.deletedEvent.npd_id = calEvent.npd_id;
 
         this.modalService.open(this.deleteModal);  
       },
