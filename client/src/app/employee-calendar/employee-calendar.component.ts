@@ -2,8 +2,11 @@ import {Component, Input, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'fullcalendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { MyEvent} from '../my-event';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MyEvent} from '../my-event';
+import {Npd} from '../npd';
+import {Router} from "@angular/router";
+import {debounceTime} from "rxjs/operator/debounceTime";
+
 
 @Component({
   selector: 'app-employee-calendar',
@@ -15,39 +18,89 @@ export class EmployeeCalendarComponent implements OnInit {
 
   // #colon is for type and = is assignment
 	holidays : any;
-  fromDate = "";
-  toDate = "";
+  npds: any;
+  fromDate :Date;
+  toDate :Date;
   events = ['select', 'RDO', 'Annual Leave', 'Sick Leave', 'Other'];
   public model = new MyEvent(this.events[0]);
+  radioBtn1: String;
+  repeatVal: 0;
+  npd = new Npd(this.fromDate, this.toDate, this.model.event, 0);
+  initial: number;
 
   constructor(
     private http: HttpClient,
     private modalService: NgbModal
-  ) { }
+  ) {
+      this.repeatVal = 0;
+      this.npd       = new Npd(this.fromDate, this.toDate, this.model.event, 0);
+      this.initial   = -1;
+  }
 
-  newEvent() {
-		this.model = new MyEvent('');
-	}
+  //newEvent() {
+		//this.model = new MyEvent('');
+	//}
 
 	getPublicHoliday() {
 		this.http.get('http://localhost:8080/holidays?max=30').subscribe(data => {
 			this.holidays = data;
 			this.displayCalendar()
 		});
-
 	}
 
-  addEvents(){
+	getNonProductiveDay() {
+		this.http.get('http://localhost:8080/npd?max=30').subscribe(data => {
+			this.npds = data;
+			this.displayCalendar()
+		});
+	}
+
+	saveEvent(){
+		//this.npd = new Npd(this.fromDate, this.toDate, this.model.event);
+		this.http.post('http://localhost:8080/npd', this.npd)
+			.subscribe(res => {
+					let id = res['id'];
+				}, (err) => {
+					console.log(err);
+				},
+                () => {
+                    this.getNonProductiveDay();
+                }
+			);
+	}
+
+  addEvent(){
     console.log('hello')
     
     $('#calendar').fullCalendar('renderEvent', {
       title: this.model.event,
-       
-        start: this.fromDate,
-        end: this.toDate,
-        color: '#424bf4',
-        textColor: 'white',
+	    start: this.fromDate,
+	    end: this.toDate,
+	    color: '#424bf4',
+	    textColor: 'white',
     });
+
+
+    if (this.radioBtn1 == 'always') {
+        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, 100);
+	} else if (this.radioBtn1 == 'repeat') {
+        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.repeatVal);
+	} else {
+        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, 1);
+	}
+
+	  this.saveEvent();
+	  /*
+	  this.http.post('http://localhost:8080/npd', this.npd)
+		  .subscribe(res => {
+				  let id = res['id'];
+			  }, (err) => {
+				  console.log(err);
+			  }
+		  );
+		  */
+
+
   }
 
 	displayCalendar(){
@@ -59,12 +112,41 @@ export class EmployeeCalendarComponent implements OnInit {
 			}
 	  });
 
-		$('#calendar').fullCalendar({
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,listYear'
-			},
+        if (this.npds != null) {
+            var ndsWithRepeat = this.npds.map(npd => {
+                    return {
+                        title: npd.reason,
+                        start: npd.start.split('T')[0],
+                        end: npd.end.split('T')[0],
+                        repeat: npd.repeatDays
+                    }
+            });
+
+            var nds = [];
+            for (var i = 0; i < ndsWithRepeat.length; i++) {
+            	for (var j = 0; j < ndsWithRepeat[i].repeat; j++) {
+            		var startDate = new Date(ndsWithRepeat[i].start);
+					var endDate = new Date(ndsWithRepeat[i].end);
+
+					startDate.setDate(startDate.getDate() + j * 7);
+					endDate.setDate(endDate.getDate() + j * 7);
+
+            		nds.push({
+						title: ndsWithRepeat[i].title,
+						start: startDate,
+						end:   endDate
+					})
+				}
+			}
+        }
+
+        var allEvents = hds.concat(nds);
+        $('#calendar').fullCalendar( {
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,listYear'
+            },
 
       dayClick: (data, jsEvent, view) => {
         this.fromDate = data.format();
@@ -73,14 +155,17 @@ export class EmployeeCalendarComponent implements OnInit {
         console.log('from', this.fromDate)
       },
 
-			displayEventTime: false, // don't show the time column in list view
+            displayEventTime: false, // don't show the time column in list view
 
-			events: hds,
+            events: allEvents,
 
-			loading: function(bool) {
-				$('#loading').toggle(bool);
-			}
-		});
+            loading: function(bool) {
+                $('#loading').toggle(bool);
+            }
+        });
+
+        $("#calendar").fullCalendar('removeEvents');
+        $("#calendar").fullCalendar('addEventSource', allEvents);
   }
 
   toDateChange(event) {
@@ -88,9 +173,8 @@ export class EmployeeCalendarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getPublicHoliday();
-
-
+	  this.getPublicHoliday();
+	  this.getNonProductiveDay();
   }
 
 }

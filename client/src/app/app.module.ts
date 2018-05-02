@@ -9,6 +9,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
 import { EmployeeCalendarComponent } from './employee-calendar/employee-calendar.component';
 import { DialogModalComponent } from './dialog-modal/dialog-modal.component';
+import { ProjectRoasterComponent } from './project-roaster/project-roaster.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { DialogModalComponent } from './dialog-modal/dialog-modal.component';
     IndexComponent,
     EmployeeCalendarComponent,
     DialogModalComponent,
+    ProjectRoasterComponent,
 
   ],
   imports: [

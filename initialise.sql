@@ -11,9 +11,10 @@ CREATE TABLE project(
   PRIMARY KEY (project_id)
 );
 
+
+
 CREATE TABLE non_productive_day(
   npd_id        INT NOT NULL AUTO_INCREMENT,
-  title         VARCHAR(1000),
   start         DATE,
   end           DATE,
   reason      VARCHAR(1000),
