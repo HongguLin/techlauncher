@@ -3,12 +3,10 @@ package com.tradeup
 
 import grails.rest.*
 import grails.converters.*
-import groovy.json.JsonSlurper
-import groovy.sql.Sql
 
-class EmployeeController {
+class ProjectController {
 	static responseFormats = ['json', 'xml']
+    def scaffold = Project
 	
     def index() { }
-
 }
