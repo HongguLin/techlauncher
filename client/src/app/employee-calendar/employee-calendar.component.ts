@@ -184,11 +184,11 @@ export class EmployeeCalendarComponent implements OnInit {
         this.modalService.open(this.dialogModal);
         console.log('from', this.fromDate)
       },
-      
+
       eventClick: (calEvent, jsEvent, view) => {
 		  this.deletedEvent.npd_id = calEvent.npd_id;
 
-        this.modalService.open(this.deleteModal);  
+        this.modalService.open(this.deleteModal);
       },
 
 			displayEventTime: false, // don't show the time column in list view
@@ -203,10 +203,6 @@ export class EmployeeCalendarComponent implements OnInit {
 		$("#calendar").fullCalendar('removeEvents');
 		$("#calendar").fullCalendar('addEventSource', allEvents);
   }
-
-  //toDateChange(event) {
-    //console.log('to', this.toDate)
-  //}
 
   ngOnInit() {
 	  this.getPublicHoliday();
