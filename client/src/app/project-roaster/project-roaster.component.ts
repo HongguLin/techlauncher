@@ -64,7 +64,6 @@ export class ProjectRoasterComponent implements OnInit {
 
       dayClick: (data, jsEvent, view) => {
         this.fromDate = data.format();
-        this.toDate = data.format();
         this.modalService.open(this.dialogModal);
       },
 
