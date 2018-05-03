@@ -33,6 +33,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/cdk@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-5.2.5.tgz#cae2b12e1990a692dd267a73fdb1d49db37f9604"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/cli@~1.7.1":
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.7.1.tgz#3a9d0b8314d4c54226f941beeb53071385c294e0"
@@ -125,6 +131,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/flex-layout@^5.0.0-beta.14":
+  version "5.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-5.0.0-beta.14.tgz#300e1cba2ef1a70f43fe7ea68ea78267cb4241e4"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/forms@^5.2.0":
   version "5.2.6"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-5.2.6.tgz#fa3e37a9e97fa3e2b24d8564a66a11d430379bfe"
@@ -140,6 +152,12 @@
 "@angular/language-service@^5.2.0":
   version "5.2.6"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-5.2.6.tgz#f88f49f54a82e95b05af50ded22f4ebbb344df1f"
+
+"@angular/material@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-5.2.5.tgz#287af95d234e0644244d9db565f7a05c10b737f8"
+  dependencies:
+    tslib "^1.7.1"
 
 "@angular/platform-browser-dynamic@^5.2.0":
   version "5.2.6"
@@ -343,6 +361,10 @@ amqplib@^0.5.2:
     buffer-more-ints "0.0.2"
     readable-stream "1.x >=1.1.9"
     safe-buffer "^5.0.1"
+
+angular-drag-and-drop-lists@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/angular-drag-and-drop-lists/-/angular-drag-and-drop-lists-2.1.0.tgz#da10cc85c804251fbaaa84d837f7380fb0cd780f"
 
 ansi-html@0.0.7:
   version "0.0.7"
@@ -4290,6 +4312,10 @@ neo-async@^2.5.0:
 netmask@~1.0.4:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
+
+ngx-drag-drop@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ngx-drag-drop/-/ngx-drag-drop-1.0.3.tgz#a7f51be09342f5b34a0cddb80562e71662e5a3ae"
 
 no-case@^2.2.0:
   version "2.3.2"
