@@ -8,6 +8,10 @@ import { NgModel } from '@angular/forms';
 import {ActivatedRoute, Router } from '@angular/router';
 import {forEach} from "@angular/router/src/utils/collection";
 import {Observable} from "rxjs/Observable";
+import { DndDropEvent, DropEffect } from "ngx-drag-drop";
+import { MatIconRegistry, MatTabChangeEvent } from "@angular/material";
+import { DomSanitizer } from "@angular/platform-browser";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-project-roaster',
@@ -18,6 +22,67 @@ export class ProjectRoasterComponent implements OnInit {
   @ViewChild("rooster") dialogModal: TemplateRef<any>
 
   @ViewChild("deletePopWindow") deleteModal: TemplateRef<any>
+
+  draggableListLeft = [
+    {
+      content: "Tom",
+      effectAllowed: "move",
+      disable: false,
+      handle: false,
+    },
+    {
+      content: "Hong",
+      effectAllowed: "move",
+      disable: false,
+      handle: false,
+    },
+    {
+      content: "Sally",
+      effectAllowed: "copyMove",
+      disable: false,
+      handle: false
+    },
+    {
+      content: "Bob",
+      effectAllowed: "move",
+      disable: false,
+      handle: true,
+    }
+  ];
+
+  draggableListRight = [
+    {
+      content: "Abby",
+      effectAllowed: "move",
+      disable: false,
+      handle: false,
+    }
+  ];
+
+  draggableListThird = [
+    {
+      content: "Todd",
+      effectAllowed: "move",
+      disable: false,
+      handle: false,
+    }
+  ];
+
+
+  layout:any;
+  horizontalLayoutActive:boolean = false;
+  private currentDraggableEvent:DragEvent;
+  private currentDragEffectMsg:string;
+  private readonly verticalLayout = {
+    container: "row",
+    list: "column",
+    dndHorizontal: false
+  };
+  private readonly horizontalLayout = {
+    container: "row",
+    list: "row",
+    dndHorizontal: true
+  };
 
   employees: any;
 	holidays : any;
@@ -35,8 +100,54 @@ export class ProjectRoasterComponent implements OnInit {
   deletedEvent: any;
 
 
-  constructor(private http: HttpClient,
-              private modalService: NgbModal) { }
+  constructor(private http: HttpClient, private modalService: NgbModal) {
+    this.setHorizontalLayout( this.horizontalLayoutActive );
+  }
+
+  setHorizontalLayout( horizontalLayoutActive:boolean ) {
+   this.layout = (horizontalLayoutActive) ? this.horizontalLayout : this.verticalLayout;
+ }
+
+ onDragStart( event:DragEvent ) {
+
+    this.currentDragEffectMsg = "";
+    this.currentDraggableEvent = event;
+
+  }
+
+  onDragged( item:any, list:any[], effect:DropEffect ) {
+
+    this.currentDragEffectMsg = `Drag ended with effect "${effect}"!`;
+
+    if( effect === "move" ) {
+
+      const index = list.indexOf( item );
+      list.splice( index, 1 );
+    }
+  }
+
+  onDragEnd( event:DragEvent ) {
+
+  this.currentDraggableEvent = event;
+  }
+
+  onDrop( event:DndDropEvent, list?:any[] ) {
+
+    if( list
+      && (event.dropEffect === "copy"
+        || event.dropEffect === "move") ) {
+
+      let index = event.index;
+
+      if( typeof index === "undefined" ) {
+
+        index = list.length;
+      }
+
+      list.splice( index, 0, event.data );
+    }
+  }
+
 
 	displayCalendar(){
 		var hds = this.holidays.map(holiday => {

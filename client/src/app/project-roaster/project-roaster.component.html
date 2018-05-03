@@ -1,5 +1,6 @@
 <div id='calendar'></div>
 
+
 <ng-template #rooster let-c="close" let-d="dismiss">
 <div class="modal-header">
   <h4 class="modal-title">Project Roster</h4>
@@ -13,6 +14,97 @@
   <ngb-tab title="Assign Employee">
     <ng-template ngbTabContent>
       <p>Assign Employees</p>
+
+      <div fxLayout="row">
+
+        <div fxFlex
+             [fxLayout]="layout.container"
+             class="layout-padding">
+
+          <div>
+            <pre>Left Column</pre>
+            <mat-list [fxLayout]="layout.list"
+                      dndDropzone
+                      [dndHorizontal]="layout.dndHorizontal"
+                      dndEffectAllowed="copyMove"
+                      (dndDrop)="onDrop($event, draggableListLeft)"
+                      class="dndList">
+              <mat-list-item dndPlaceholderRef
+                             class="dndPlaceholder">
+              </mat-list-item>
+              <mat-list-item *ngFor="let item of draggableListLeft"
+                             [dndDraggable]="item"
+                             [dndEffectAllowed]="item.effectAllowed"
+                             [dndDisableIf]="item.disable"
+                             (dndStart)="onDragStart($event)"
+                             (dndCopied)="onDragged(item, draggableListLeft, 'copy')"
+                             (dndLinked)="onDragged(item, draggableListLeft, 'link')"
+                             (dndMoved)="onDragged(item, draggableListLeft, 'move')"
+                             (dndCanceled)="onDragged(item, draggableListLeft, 'none')"
+                             (dndEnd)="onDragEnd($event)">
+
+                <h1 mat-line>{{item.content}}</h1>
+                <p mat-line>effectAllowed: {{item.effectAllowed}}</p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <div>
+            <pre>Right Column"</pre>
+            <mat-list [fxLayout]="layout.list"
+                      dndDropzone
+                      [dndHorizontal]="layout.dndHorizontal"
+                      dndEffectAllowed="copyMove"
+                      (dndDrop)="onDrop($event, draggableListRight)"
+                      class="dndList">
+
+              <mat-list-item dndPlaceholderRef
+                             class="dndPlaceholder">
+              </mat-list-item>
+
+              <mat-list-item *ngFor="let item of draggableListRight"
+                             [dndDraggable]="item"
+                             [dndEffectAllowed]="item.effectAllowed"
+                             [dndDisableIf]="item.disable"
+                             (dndStart)="onDragStart($event)"
+                             (dndCopied)="onDragged(item, draggableListRight, 'copy')"
+                             (dndLinked)="onDragged(item, draggableListRight, 'link')"
+                             (dndMoved)="onDragged(item, draggableListRight, 'move')"
+                             (dndCanceled)="onDragged(item, draggableListRight, 'none')"
+                             (dndEnd)="onDragEnd($event)">
+
+                <h1 mat-line>{{item.content}}</h1>
+                <p mat-line>effectAllowed: {{item.effectAllowed}}</p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <div>
+            <pre>Third Column"</pre>
+            <mat-list [fxLayout]="layout.list"
+                      dndDropzone
+                      [dndHorizontal]="layout.dndHorizontal"
+                      dndEffectAllowed="copyMove"
+                      (dndDrop)="onDrop($event, draggableListThird)"
+                      class="dndList">
+              <mat-list-item dndPlaceholderRef
+                             class="dndPlaceholder">
+              </mat-list-item>
+              <mat-list-item *ngFor="let item of draggableListThird"
+                             [dndDraggable]="item"
+                             [dndEffectAllowed]="item.effectAllowed"
+                             [dndDisableIf]="item.disable"
+                             (dndStart)="onDragStart($event)"
+                             (dndCopied)="onDragged(item, draggableListThird, 'copy')"
+                             (dndLinked)="onDragged(item, draggableListThird, 'link')"
+                             (dndMoved)="onDragged(item, draggableListThird, 'move')"
+                             (dndCanceled)="onDragged(item, draggableListThird, 'none')"
+                             (dndEnd)="onDragEnd($event)">
+                <h1 mat-line>{{item.content}}</h1>
+                <p mat-line>effectAllowed: {{item.effectAllowed}}</p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </div>
     </ng-template>
   </ngb-tab>
   <ngb-tab>
