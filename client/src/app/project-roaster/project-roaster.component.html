@@ -1,6 +1,4 @@
 <div id='calendar'></div>
-<<<<<<< HEAD
-=======
 
 <ng-template #rooster let-c="close" let-d="dismiss">
 <div class="modal-header">
@@ -10,7 +8,7 @@
   </button>
 </div>
 <div class="modal-body">
-  <!-- From date unavailability  -->
+
   <ngb-tabset>
   <ngb-tab title="Assign Employee">
     <ng-template ngbTabContent>
@@ -26,7 +24,7 @@
           <input class="form-control" type="time" [(ngModel)]="fromDate" id="example-date-input">
         </div>
       </div>
-      <!-- To date unavailability  -->
+ 
       <div class="form-group row">
         <label for="example-date-input" class="col-4 col-form-label">To:</label>
         <div class="col-8">
@@ -41,12 +39,19 @@
               <input type="checkbox" name="repeat" (click)="radioBtn1='repeat'" aria-label="Radio button for following text input">
             </div>
             <label for="example-date-input" class="col-2 col-form-label">Repeat</label>
-          <div class="col-2">
-            <input type="number" [(ngModel)]="repeatVal" class="form-control" placeholder="0">
-          </div>
+            <div class="col-2">
+                <input type="number" [(ngModel)]="repeatVal" class="form-control" placeholder="0">
+            </div>
             <div class="col-2 col-form-label">Weeks</div>
         </div>
       </div>
+
+      <div class="modal-footer">
+        <!-- need a button for Confirm(submit function) here-->
+        <button type="button" class="btn btn-primary" id="deletebtn" (click)="c('Close click')">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
+      </div>
+
     </ng-template>
   </ngb-tab>
 </ngb-tabset>
@@ -68,9 +73,9 @@
     <button type="button" class="btn btn-primary" id="deletebtn" (click)="deleteEvent();c('Close click')">Confirm</button>
     <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
   </div>
+
+
   </ng-template>
-  <hr>
 
   <pre>{{closeResult}}</pre>
 <!-- end -->
->>>>>>> bf2fabe0d80d19b00ece23714faa17d27420807f
