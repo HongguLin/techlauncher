@@ -44,8 +44,7 @@
                              (dndCanceled)="onDragged(item, draggableListLeft, 'none')"
                              (dndEnd)="onDragEnd($event)">
 
-                <h1 mat-line>{{item.content}}</h1>
-                <p mat-line>effectAllowed: {{item.effectAllowed}}</p>
+                <h1 mat-line>{{item.content}}</h1>             
               </mat-list-item>
             </mat-list>
           </div>
@@ -75,7 +74,6 @@
                              (dndEnd)="onDragEnd($event)">
 
                 <h1 mat-line>{{item.content}}</h1>
-                <p mat-line>effectAllowed: {{item.effectAllowed}}</p>
               </mat-list-item>
             </mat-list>
           </div>
@@ -102,7 +100,6 @@
                              (dndCanceled)="onDragged(item, draggableListThird, 'none')"
                              (dndEnd)="onDragEnd($event)">
                 <h1 mat-line>{{item.content}}</h1>
-                <p mat-line>effectAllowed: {{item.effectAllowed}}</p>
               </mat-list-item>
             </mat-list>
           </div>
