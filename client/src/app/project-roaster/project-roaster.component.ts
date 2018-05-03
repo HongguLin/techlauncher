@@ -12,6 +12,7 @@ import { DndDropEvent, DropEffect } from "ngx-drag-drop";
 import { MatIconRegistry, MatTabChangeEvent } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { datepickerLocale } from 'fullcalendar';
 
 @Component({
   selector: 'app-project-roaster',
@@ -90,6 +91,10 @@ export class ProjectRoasterComponent implements OnInit {
   npds = [];
   fromDate :Date;
   toDate :Date;
+  
+  todaysday: Date;
+  strDay: String;
+
   events = ['select', 'RDO', 'Annual Leave', 'Sick Leave', 'Other'];
   public model = new MyEvent(this.events[0]);
   radioBtn1: String;
@@ -98,6 +103,7 @@ export class ProjectRoasterComponent implements OnInit {
 	selectedEmployeeId:number;
   npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
   deletedEvent: any;
+
 
 
   constructor(private http: HttpClient, private modalService: NgbModal) {
@@ -173,9 +179,14 @@ export class ProjectRoasterComponent implements OnInit {
 				$('#loading').toggle(bool);
 			},
 
+      // public toDay = "";
+
       dayClick: (data, jsEvent, view) => {
+        var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         this.fromDate = data.format();
         this.modalService.open(this.dialogModal);
+        this.todaysday = data.day();
+        this.strDay = days[Number(this.todaysday)]
       },
 
       eventClick: (calEvent, jsEvent, view) => {
