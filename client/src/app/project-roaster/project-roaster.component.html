@@ -1,1 +1,58 @@
-<div id='calendar'></div>
+<div id='calendar'>
+    <div id = "Time-setup">
+        <head>
+         <link rel = "stylesheet" type = "text/css" href = "employee-calendar.component.css">
+            <meta charset="UTF-8">
+             <title>Time set-up</title>
+    </head>
+        <body>
+            <table style="width:100%">
+                <tr>
+                    <th>
+                        Time set-up
+                    </th>
+                </tr>
+            
+                <tr>
+                    <td>
+                        <script>
+                            var d = new Date();
+                            document.write(d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate()));
+                        </script>
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td>
+                        <from action = "/demo/demo_from.asp">
+                            Start:
+                            <input type = "time" name = "usr_time">
+                            Finish:
+                            <input type = "time" name = "usr_time">
+                        </from>
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td>
+                        <from action = "/demo/demo_from/asp">
+                            <input type = "checkbox" name = "repeat" value = "x">Repeat on every Thursday for 
+                            <from action = "action_page.php">
+                                <input type = "number" name = "repeat" value = "x" min = "0" max = "48">weeks
+                            </from>
+                        </from>
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="savebtn" (click)="addEvent();c('Close click')">Save</button>
+                            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancle</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </body>
+    </div>
+</div>
