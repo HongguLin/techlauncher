@@ -38,7 +38,7 @@ export class ProjectRoasterComponent implements OnInit {
     },
     {
       content: "Sally",
-      effectAllowed: "copyMove",
+      effectAllowed: "Move",
       disable: false,
       handle: false
     },
@@ -147,6 +147,11 @@ export class ProjectRoasterComponent implements OnInit {
       list.splice( index, 0, event.data );
     }
   }
+
+
+  saveEvent(){
+		console.log('Save');
+	}
 
 
 	displayCalendar(){
