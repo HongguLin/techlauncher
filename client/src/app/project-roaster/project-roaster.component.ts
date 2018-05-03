@@ -13,6 +13,7 @@ import { MatIconRegistry, MatTabChangeEvent } from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { datepickerLocale } from 'fullcalendar';
+import { expand } from 'rxjs/operator/expand';
 
 @Component({
   selector: 'app-project-roaster',
@@ -82,7 +83,7 @@ export class ProjectRoasterComponent implements OnInit {
   private readonly horizontalLayout = {
     container: "row",
     list: "row",
-    dndHorizontal: true
+    dndHorizontal: true,
   };
 
   employees: any;
@@ -108,6 +109,7 @@ export class ProjectRoasterComponent implements OnInit {
 
   constructor(private http: HttpClient, private modalService: NgbModal) {
     this.setHorizontalLayout( this.horizontalLayoutActive );
+    
   }
 
   setHorizontalLayout( horizontalLayoutActive:boolean ) {
@@ -184,7 +186,7 @@ export class ProjectRoasterComponent implements OnInit {
       dayClick: (data, jsEvent, view) => {
         var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         this.fromDate = data.format();
-        this.modalService.open(this.dialogModal);
+        this.modalService.open(this.dialogModal,{size:'lg'});
         this.todaysday = data.day();
         this.strDay = days[Number(this.todaysday)]
       },
