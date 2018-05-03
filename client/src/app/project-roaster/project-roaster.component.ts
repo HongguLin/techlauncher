@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'fullcalendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {MyEvent} from '../my-event';
+import {Npd} from '../npd';
+import { NgModel } from '@angular/forms';
+import {ActivatedRoute, Router } from '@angular/router';
+import {forEach} from "@angular/router/src/utils/collection";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-project-roaster',
@@ -9,8 +15,25 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./project-roaster.component.css']
 })
 export class ProjectRoasterComponent implements OnInit {
+  @ViewChild("rooster") dialogModal: TemplateRef<any>
 
+  @ViewChild("deletePopWindow") deleteModal: TemplateRef<any>
+
+  employees: any;
 	holidays : any;
+	npdIDs:any[];
+  npds = [];
+  fromDate :Date;
+  toDate :Date;
+  events = ['select', 'RDO', 'Annual Leave', 'Sick Leave', 'Other'];
+  public model = new MyEvent(this.events[0]);
+  radioBtn1: String;
+  repeatVal: 0;
+	initial: number;
+	selectedEmployeeId:number;
+  npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
+  deletedEvent: any;
+
 
   constructor(private http: HttpClient,
               private modalService: NgbModal) { }
@@ -37,7 +60,18 @@ export class ProjectRoasterComponent implements OnInit {
 
 			loading: function(bool) {
 				$('#loading').toggle(bool);
-			}
+			},
+
+      dayClick: (data, jsEvent, view) => {
+        this.fromDate = data.format();
+        this.modalService.open(this.dialogModal);
+      },
+
+      eventClick: (calEvent, jsEvent, view) => {
+		    this.deletedEvent.npd_id = calEvent.npd_id;
+        this.modalService.open(this.deleteModal);
+      },
+
 		});
 
 	}

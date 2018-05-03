@@ -22,6 +22,7 @@
 </div>
 <div class="modal-body">
   <!-- From date unavailability  -->
+<<<<<<< HEAD
   <div class="form-group row">
    <div class="col-4">
     <input type="radio" name="repeat" aria-label="Radio button for following text input">
@@ -29,6 +30,15 @@
 
     <label for="example-date-input" class="col-2 col-form-label">From:</label>
     <div class="col-6">
+=======
+  <div>
+    <br>
+    <br>
+  </div>
+  <div class="form-group row">
+    <label for="example-date-input" class="col-4 col-form-label">From:</label>
+    <div class="col-8">
+>>>>>>> 93418011a329e6419f315c7490f0ba09974a0a48
       <input class="form-control" type="date" [(ngModel)]="fromDate" id="example-date-input">
     </div>
 
@@ -43,7 +53,6 @@
       <input class="form-control" type="date" [(ngModel)]="toDate" (ngModelChange)="toDateChange($event)" id="example-date-input">
     </div>
   </div>
-  
   <hr>
 
   <!-- Repeat Option  -->
@@ -53,6 +62,7 @@
           <input type="radio" name="repeat" aria-label="Radio button for following text input">
         </div>
         <label for="example-date-input" class="col-2 col-form-label">Repeat</label>
+<<<<<<< HEAD
       
         <div class="col-4">  
   <!-- validation for repeat weeks, only numbers are allowed -->           
@@ -69,17 +79,32 @@
     </div>
   </div>
 
+=======
+      <div class="col-2">
+        <input type="number" [(ngModel)]="repeatVal" class="form-control" placeholder="0">
+      </div>
+        <div class="col-2 col-form-label">Weeks</div>
+    </div>
+  </div>
+>>>>>>> 93418011a329e6419f315c7490f0ba09974a0a48
   <hr>
 
 
   <!-- Repeat Always  -->
   <div class="form-group row">
       <div class="col-4">
+<<<<<<< HEAD
     <input type="radio" name="repeat" aria-label="Radio button for following text input" value='always'>
       </div>     
         <label for="example-date-input" class="col-4 col-form-label">Repeat Always</label>    
   </div> 
 
+=======
+    <input type="radio" name="repeat" (click)="radioBtn1='always'"  aria-label="Radio button for following text input" value='always'>
+      </div>
+        <label for="example-date-input" class="col-4 col-form-label">Repeat Always</label>
+  </div>
+>>>>>>> 93418011a329e6419f315c7490f0ba09974a0a48
   <hr>
 
   <!-- Reason dropdown -->
@@ -91,11 +116,9 @@
               [(ngModel)]="model.event" name="event"
               #event="ngModel">
         <option *ngFor="let e of events" [value]="e">{{e}}</option>
-      </select> 
+      </select>
     </div>
   </div>
-
-  
 
 </div>
 <div class="modal-footer">
@@ -106,8 +129,6 @@
 <hr>
 
 <pre>{{closeResult}}</pre>
-
-
 
 <!-- delete event popup window -->
 
@@ -129,6 +150,3 @@
 
   <pre>{{closeResult}}</pre>
 <!-- end -->
-
-
-

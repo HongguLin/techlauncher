@@ -7,60 +7,56 @@ import {Npd} from '../npd';
 import { NgModel } from '@angular/forms';
 import {ActivatedRoute, Router } from '@angular/router';
 import {forEach} from "@angular/router/src/utils/collection";
-import {Observable} from "rxjs/Observable";
 
 
 @Component({
-  selector: 'app-employee-calendar',
-  templateUrl: './employee-calendar.component.html',
-  styleUrls: ['./employee-calendar.component.css']
+	selector: 'app-employee-calendar',
+	templateUrl: './employee-calendar.component.html',
+	styleUrls: ['./employee-calendar.component.css']
 })
 export class EmployeeCalendarComponent implements OnInit {
-  @ViewChild("content") dialogModal: TemplateRef<any>
+	@ViewChild("content") dialogModal: TemplateRef<any>
 
-  @ViewChild("deletePopWindow") deleteModal: TemplateRef<any>
+	@ViewChild("deletePopWindow") deleteModal: TemplateRef<any>
 
-  // #colon is for type and = is assignment
+	// #colon is for type and = is assignment
 	employees: any;
 	holidays : any;
 	npdIDs:any[];
-  npds = [];
-  fromDate :Date;
-  toDate :Date;
-  events = ['select', 'RDO', 'Annual Leave', 'Sick Leave', 'Other'];
-  public model = new MyEvent(this.events[0]);
-  radioBtn1: String;
-  repeatVal: 0;
+	npds = [];
+	fromDate :Date;
+	toDate :Date;
+	events = ['select', 'RDO', 'Annual Leave', 'Sick Leave', 'Other'];
+	public model = new MyEvent(this.events[0]);
+	radioBtn1: String;
+	repeatVal: 0;
 	initial: number;
 	selectedEmployeeId:number;
-  npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
-  deletedEvent: any;
+	npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
+	deletedEvent: any;
 
 
-  constructor(
-    private http: HttpClient,
-    private modalService: NgbModal
-  ) {
-      this.repeatVal = 0;
-      this.npd       = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
-      this.initial   = -1;
-      this.selectedEmployeeId=1;
-      this.deletedEvent = [];
-  }
+	constructor(
+		private http: HttpClient,
+		private modalService: NgbModal
+	) {
+		this.repeatVal = 0;
+		this.npd       = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
+		this.initial   = -1;
+		this.selectedEmployeeId=1;
+		this.deletedEvent = [];
+	}
 
 
 	getPublicHoliday() {
 		this.http.get('http://localhost:8080/holidays?max=30').subscribe(data => {
 			this.holidays = data;
-			//this.displayCalendar()
-
 		});
 	}
 
 	getEmployee(){
 		this.http.get('http://localhost:8080/employee?max=30').subscribe(data=>{
 			this.employees = data;
-
 			this.getnpds();
 		});
 	}
@@ -78,22 +74,22 @@ export class EmployeeCalendarComponent implements OnInit {
 
 	getnpds(){
 		this.npds=[];
-  	this.http.get('http://localhost:8080/employee/'+this.selectedEmployeeId).subscribe(data=>{
-  		this.npdIDs = data['npds'];
-		  console.log(this.npdIDs);
-		  var index = 0;
-		  if(this.npdIDs.length!=0){
-			  this.npdIDs.forEach(data =>{
-				  index ++;
-				  var i = data['npd_id'];
-				  console.log(i);
-				  this.getnpd(i,index,this.npdIDs.length);
-			  });
-		  }else {
-		  	this.displayCalendar()
-		  }
+		this.http.get('http://localhost:8080/employee/'+this.selectedEmployeeId).subscribe(data=>{
+			this.npdIDs = data['npds'];
+			console.log(this.npdIDs);
+			var index = 0;
+			if(this.npdIDs.length!=0){
+				this.npdIDs.forEach(data =>{
+					index ++;
+					var i = data['npd_id'];
+					console.log(i);
+					this.getnpd(i,index,this.npdIDs.length);
+				});
+			}else {
+				this.displayCalendar()
+			}
 
-	  });
+		});
 	}
 
 	deleteEvent() {
@@ -101,7 +97,7 @@ export class EmployeeCalendarComponent implements OnInit {
 			.subscribe(res => {},
 				(err) => {console.log(err);},
 				() => {
-				this.getnpds();
+					this.getnpds();
 				});
 	}
 
@@ -117,27 +113,26 @@ export class EmployeeCalendarComponent implements OnInit {
 			);
 	}
 
-  addEvent(){
-    if (this.radioBtn1 == 'always') {
-        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 100);
+	addEvent(){
+		if (this.radioBtn1 == 'always') {
+			this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 100);
 		} else if (this.radioBtn1 == 'repeat') {
-        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, this.repeatVal);
+			this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, this.repeatVal);
 		} else {
-        this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 1);
+			this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 1);
 		}
-	  this.saveEvent();
-  }
+		this.saveEvent();
+	}
 
 	displayCalendar(){
-		console.log('f2');
 		$('#calendar').fullCalendar('removeEvents');
-  	var hds = this.holidays.map(holiday => {
-  		return {
-			  title: holiday.name,
-			  start: holiday.start.split('T')[0],
-			  end: holiday.end.split('T')[0],
+		var hds = this.holidays.map(holiday => {
+			return {
+				title: holiday.name,
+				start: holiday.start.split('T')[0],
+				end: holiday.end.split('T')[0],
 			}
-	  });
+		});
 
 		if (this.npds != null) {
 			var ndsWithRepeat = this.npds.map(npd => {
@@ -178,21 +173,20 @@ export class EmployeeCalendarComponent implements OnInit {
 				right: 'month,listYear'
 			},
 
-      dayClick: (data, jsEvent, view) => {
-        this.fromDate = data.format();
-        this.toDate = data.format();
-        this.modalService.open(this.dialogModal);
-        console.log('from', this.fromDate)
-      },
-      
-      eventClick: (calEvent, jsEvent, view) => {
-		  this.deletedEvent.npd_id = calEvent.npd_id;
+			dayClick: (data, jsEvent, view) => {
+				this.fromDate = data.format();
+				this.toDate = data.format();
+				this.modalService.open(this.dialogModal);
+				console.log('from', this.fromDate)
+			},
 
-        this.modalService.open(this.deleteModal);  
-      },
+			eventClick: (calEvent, jsEvent, view) => {
+				this.deletedEvent.npd_id = calEvent.npd_id;
+
+				this.modalService.open(this.deleteModal);
+			},
 
 			displayEventTime: false, // don't show the time column in list view
-
 			events: allEvents,
 
 			loading: function(bool) {
@@ -203,10 +197,6 @@ export class EmployeeCalendarComponent implements OnInit {
 		$("#calendar").fullCalendar('removeEvents');
 		$("#calendar").fullCalendar('addEventSource', allEvents);
   }
-
-  //toDateChange(event) {
-    //console.log('to', this.toDate)
-  //}
 
   ngOnInit() {
 	  this.getPublicHoliday();
