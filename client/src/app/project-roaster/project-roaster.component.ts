@@ -1,7 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'fullcalendar';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {MyEvent} from '../my-event';
+import {Npd} from '../npd';
+import { NgModel } from '@angular/forms';
+import {ActivatedRoute, Router } from '@angular/router';
+import {forEach} from "@angular/router/src/utils/collection";
+import {Observable} from "rxjs/Observable";
+import { DndDropEvent, DropEffect } from "ngx-drag-drop";
+import { MatIconRegistry, MatTabChangeEvent } from "@angular/material";
+import { DomSanitizer } from "@angular/platform-browser";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-project-roaster',
@@ -9,11 +19,140 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./project-roaster.component.css']
 })
 export class ProjectRoasterComponent implements OnInit {
+  @ViewChild("rooster") dialogModal: TemplateRef<any>
 
+  @ViewChild("deletePopWindow") deleteModal: TemplateRef<any>
+
+  draggableListLeft = [
+    {
+      content: "Tom",
+      effectAllowed: "move",
+      disable: false,
+      handle: false,
+    },
+    {
+      content: "Hong",
+      effectAllowed: "move",
+      disable: false,
+      handle: false,
+    },
+    {
+      content: "Sally",
+      effectAllowed: "Move",
+      disable: false,
+      handle: false
+    },
+    {
+      content: "Bob",
+      effectAllowed: "move",
+      disable: false,
+      handle: true,
+    }
+  ];
+
+  draggableListRight = [
+    {
+      content: "Abby",
+      effectAllowed: "move",
+      disable: false,
+      handle: false,
+    }
+  ];
+
+  draggableListThird = [
+    {
+      content: "Todd",
+      effectAllowed: "move",
+      disable: false,
+      handle: false,
+    }
+  ];
+
+
+  layout:any;
+  horizontalLayoutActive:boolean = false;
+  private currentDraggableEvent:DragEvent;
+  private currentDragEffectMsg:string;
+  private readonly verticalLayout = {
+    container: "row",
+    list: "column",
+    dndHorizontal: false
+  };
+  private readonly horizontalLayout = {
+    container: "row",
+    list: "row",
+    dndHorizontal: true
+  };
+
+  employees: any;
 	holidays : any;
+	npdIDs:any[];
+  npds = [];
+  fromDate :Date;
+  toDate :Date;
+  events = ['select', 'RDO', 'Annual Leave', 'Sick Leave', 'Other'];
+  public model = new MyEvent(this.events[0]);
+  radioBtn1: String;
+  repeatVal: 0;
+	initial: number;
+	selectedEmployeeId:number;
+  npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
+  deletedEvent: any;
 
-  constructor(private http: HttpClient,
-              private modalService: NgbModal) { }
+
+  constructor(private http: HttpClient, private modalService: NgbModal) {
+    this.setHorizontalLayout( this.horizontalLayoutActive );
+  }
+
+  setHorizontalLayout( horizontalLayoutActive:boolean ) {
+   this.layout = (horizontalLayoutActive) ? this.horizontalLayout : this.verticalLayout;
+ }
+
+ onDragStart( event:DragEvent ) {
+
+    this.currentDragEffectMsg = "";
+    this.currentDraggableEvent = event;
+
+  }
+
+  onDragged( item:any, list:any[], effect:DropEffect ) {
+
+    this.currentDragEffectMsg = `Drag ended with effect "${effect}"!`;
+
+    if( effect === "move" ) {
+
+      const index = list.indexOf( item );
+      list.splice( index, 1 );
+    }
+  }
+
+  onDragEnd( event:DragEvent ) {
+
+  this.currentDraggableEvent = event;
+  }
+
+  onDrop( event:DndDropEvent, list?:any[] ) {
+
+    if( list
+      && (event.dropEffect === "copy"
+        || event.dropEffect === "move") ) {
+
+      let index = event.index;
+
+      if( typeof index === "undefined" ) {
+
+        index = list.length;
+      }
+
+      list.splice( index, 0, event.data );
+    }
+  }
+
+
+  saveEvent(){
+		console.log('Save');
+	}
+
 
 	displayCalendar(){
 		var hds = this.holidays.map(holiday => {
@@ -37,7 +176,18 @@ export class ProjectRoasterComponent implements OnInit {
 
 			loading: function(bool) {
 				$('#loading').toggle(bool);
-			}
+			},
+
+      dayClick: (data, jsEvent, view) => {
+        this.fromDate = data.format();
+        this.modalService.open(this.dialogModal);
+      },
+
+      eventClick: (calEvent, jsEvent, view) => {
+		    this.deletedEvent.npd_id = calEvent.npd_id;
+        this.modalService.open(this.deleteModal);
+      },
+
 		});
 
 	}

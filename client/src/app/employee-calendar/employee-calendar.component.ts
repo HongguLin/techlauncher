@@ -196,14 +196,12 @@ export class EmployeeCalendarComponent implements OnInit {
 
 		$("#calendar").fullCalendar('removeEvents');
 		$("#calendar").fullCalendar('addEventSource', allEvents);
-	}
+  }
 
-	//toDateChange(event) {
-	//console.log('to', this.toDate)
-	//}
-	ngOnInit() {
-		this.getPublicHoliday();
-		this.getEmployee();
-	}
+  ngOnInit() {
+	  this.getPublicHoliday();
+	  this.getEmployee();
+	  //this.getnpds();
+  }
 
 }
