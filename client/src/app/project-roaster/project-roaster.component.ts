@@ -93,6 +93,7 @@ export class ProjectRoasterComponent implements OnInit {
   fromDate :Date;
   toDate :Date;
   
+  todayDate: Date;
   todaysday: Date;
   strDay: String;
 
@@ -186,6 +187,7 @@ export class ProjectRoasterComponent implements OnInit {
       dayClick: (data, jsEvent, view) => {
         var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         this.fromDate = data.format();
+        this.todayDate = this.fromDate;
         this.modalService.open(this.dialogModal,{size:'lg'});
         this.todaysday = data.day();
         this.strDay = days[Number(this.todaysday)]
