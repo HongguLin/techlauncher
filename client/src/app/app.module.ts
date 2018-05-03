@@ -11,6 +11,17 @@ import { EmployeeCalendarComponent } from './employee-calendar/employee-calendar
 import { DialogModalComponent } from './dialog-modal/dialog-modal.component';
 import { ProjectRoasterComponent } from './project-roaster/project-roaster.component';
 
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { DndModule } from 'ngx-drag-drop';
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatListModule } from "@angular/material/list";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatToolbarModule } from "@angular/material/toolbar";
 
 @NgModule({
   declarations: [
@@ -26,6 +37,16 @@ import { ProjectRoasterComponent } from './project-roaster/project-roaster.compo
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    DndModule,MatButtonModule,
+    MatInputModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatSnackBarModule,
+    MatSlideToggleModule,
+    MatIconModule,
+    FlexLayoutModule,
+    MatListModule,
+    MatTabsModule,
     NgbModule.forRoot()
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
