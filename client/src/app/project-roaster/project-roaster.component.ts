@@ -183,6 +183,7 @@ export class ProjectRoasterComponent implements OnInit {
 		});
 	}
 
+	//get available employee for today and assign them to the available draggable list
 	getAvailability(available, npdays,today,employee_name){
 		console.log('today:',today);
 		console.log('npdays:',npdays);
@@ -202,6 +203,7 @@ export class ProjectRoasterComponent implements OnInit {
 		console.log(available);
 	}
 
+	//get assigned employee for current project on today and assign them to the assigned to today draggable list
 	getAssigned(assigned, wdays,today,employee_name){
 		console.log('today:',today);
 		console.log('wdays:',wdays);
@@ -270,6 +272,15 @@ export class ProjectRoasterComponent implements OnInit {
 	}
 
 
+	/*
+	when drag the employee from available list to assigned to today list,
+	trigger this function to add workday to the employee being dragged
+
+	To Do:
+	obtain startTime
+	obtain finishTime
+	obtain the id of the employee being dragged
+	*/
 	saveworkday(){
 		//need to set up (this.startTime, this.finishTime, this.currentSelectedEmployee) first
 		this.wd = new Wd(this.todayDate, this.startTime, this.finishTime, this.currentSelectedEmployee);
