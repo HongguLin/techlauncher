@@ -1,4 +1,3 @@
-
 <!-- Employee dropdown -->
 <div class="col">
   <label class="col-4 col-form-label">Select Employee: </label>
@@ -14,94 +13,83 @@
 <div id='calendar'></div>
 
 <ng-template #content let-c="close" let-d="dismiss">
-<div class="modal-header">
-  <h4 class="modal-title">Add Unavailability</h4>
-  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <!-- From date unavailability  -->
-  <div class="form-group row">
-   <div class="col-4">
-    <input type="radio" name="repeat" aria-label="Radio button for following text input">
-    </div>
-
-    <label for="example-date-input" class="col-2 col-form-label">From:</label>
-    <div class="col-6">
-      <input class="form-control" type="date" [(ngModel)]="fromDate" id="example-date-input">
-    </div>
-
+  <div class="modal-header">
+    <h4 class="modal-title">Add Unavailability</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-  
-  <!-- To date unavailability  -->
-  <div class="form-group row">
-    <div class="col-4">
-    </div>
-    <label for="example-date-input" class="col-2 col-form-label">To:</label>
-    <div class="col-6">
-      <input class="form-control" type="date" [(ngModel)]="toDate" (ngModelChange)="toDateChange($event)" id="example-date-input">
-    </div>
-  </div>
-  
-  <hr>
+  <div class="modal-body">
+    <!-- From date unavailability  -->
 
-  <!-- Repeat Option  -->
-  <div class="form-group row">
+    <!-- <div class="col-4">
+      <input type="radio" name="repeat" aria-label="Radio button for following text input">
+      </div> -->
+
+    <div class="form-group row">
+      <label for="example-date-input" class="col-4 col-form-label">From:</label>
+      <div class="col-8">
+        <input class="form-control" type="date" [(ngModel)]="fromDate" id="example-date-input">
+      </div>
+    </div>
+    <!-- To date unavailability  -->
+    <div class="form-group row">
+      <label for="example-date-input" class="col-4 col-form-label">To:</label>
+      <div class="col-8">
+        <input class="form-control" type="date" [(ngModel)]="toDate" (ngModelChange)="toDateChange($event)" id="example-date-input">
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Repeat Option  -->
+
+    <div class="form-group row">
       <div class="input-group">
         <div class="col-4">
-          <input type="radio" name="repeat" aria-label="Radio button for following text input">
+          <input type="radio" name="repeat" (click)="radioBtn1='repeat'" aria-label="Radio button for following text input">
         </div>
         <label for="example-date-input" class="col-2 col-form-label">Repeat</label>
-      
-        <div class="col-4">  
-  <!-- validation for repeat weeks, only numbers are allowed -->           
-        <form name="myForm">
-        <input name="input" 
-         ng-model="userInput" class="form-control" 
-         aria-label="Text input with radio button"
-         placeholder="0"
-         type="number" min="0" max="53" required number>
-        </form>
+        <div class="col-2">
+          <input type="number" [(ngModel)]="repeatVal" class="form-control" placeholder="0">
         </div>
-        <div class="col-2 col-form-label">Weeks</div>     
-
+        <div class="col-2 col-form-label">Weeks</div>
+      </div>
     </div>
-  </div>
-
-  <hr>
 
 
-  <!-- Repeat Always  -->
-  <div class="form-group row">
+    <hr>
+
+    <!-- Repeat Always  -->
+    <div class="form-group row">
       <div class="col-4">
-    <input type="radio" name="repeat" aria-label="Radio button for following text input" value='always'>
-      </div>     
-        <label for="example-date-input" class="col-4 col-form-label">Repeat Always</label>    
-  </div> 
-
-  <hr>
-
-  <!-- Reason dropdown -->
-  <div class="form-group row">
-    <label for="event" class="col-4 col-form-label">Reason: </label>
-    <div class="col-8">
-      <select class="event-control form-control" id="event"
-              required
-              [(ngModel)]="model.event" name="event"
-              #event="ngModel">
-        <option *ngFor="let e of events" [value]="e">{{e}}</option>
-      </select> 
+        <input type="radio" name="repeat" (click)="radioBtn1='always'"  aria-label="Radio button for following text input" value='always'>
+      </div>
+      <label for="example-date-input" class="col-4 col-form-label">Repeat Always</label>
     </div>
+
+    <hr>
+
+    <!-- Reason dropdown -->
+    <div class="form-group row">
+      <label for="event" class="col-4 col-form-label">Reason: </label>
+      <div class="col-8">
+        <select class="event-control form-control" id="event"
+                required
+                [(ngModel)]="model.event" name="event"
+                #event="ngModel">
+          <option *ngFor="let e of events" [value]="e">{{e}}</option>
+        </select>
+      </div>
+    </div>
+
+
+
   </div>
-
-  
-
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-primary" (click)="addEvents()">Save</button>
-  <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
-</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" id="savebtn" (click)="addEvent();c('Close click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
 </ng-template>
 <hr>
 
@@ -124,12 +112,8 @@
     <button type="button" class="btn btn-primary" id="deletebtn" (click)="deleteEvent();c('Close click')">Confirm</button>
     <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
   </div>
-  </ng-template>
-  
-  <hr>
+</ng-template>
+<hr>
 
-  <pre>{{closeResult}}</pre>
+<pre>{{closeResult}}</pre>
 <!-- end -->
-
-
-

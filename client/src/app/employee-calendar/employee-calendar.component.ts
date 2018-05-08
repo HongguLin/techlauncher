@@ -7,6 +7,7 @@ import {Npd} from '../npd';
 import { NgModel } from '@angular/forms';
 import {ActivatedRoute, Router } from '@angular/router';
 import {forEach} from "@angular/router/src/utils/collection";
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -51,12 +52,14 @@ export class EmployeeCalendarComponent implements OnInit {
 	getPublicHoliday() {
 		this.http.get('http://localhost:8080/holidays?max=30').subscribe(data => {
 			this.holidays = data;
+			//this.displayCalendar()
 		});
 	}
 
 	getEmployee(){
 		this.http.get('http://localhost:8080/employee?max=30').subscribe(data=>{
 			this.employees = data;
+
 			this.getnpds();
 		});
 	}
@@ -125,6 +128,7 @@ export class EmployeeCalendarComponent implements OnInit {
 	}
 
 	displayCalendar(){
+		console.log('f2');
 		$('#calendar').fullCalendar('removeEvents');
 		var hds = this.holidays.map(holiday => {
 			return {
@@ -196,12 +200,15 @@ export class EmployeeCalendarComponent implements OnInit {
 
 		$("#calendar").fullCalendar('removeEvents');
 		$("#calendar").fullCalendar('addEventSource', allEvents);
-  }
+	}
 
-  ngOnInit() {
-	  this.getPublicHoliday();
-	  this.getEmployee();
-	  //this.getnpds();
-  }
+	//toDateChange(event) {
+	//console.log('to', this.toDate)
+	//}
+	ngOnInit() {
+		this.getPublicHoliday();
+		this.getEmployee();
+		//this.getnpds();
+	}
 
 }
