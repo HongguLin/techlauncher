@@ -52,14 +52,7 @@ export class ProjectRoasterComponent implements OnInit {
     }
   ];
 
-  draggableListRight = [
-    {
-      content: "Abby",
-      effectAllowed: "move",
-      disable: false,
-      handle: false,
-    }
-  ];
+  draggableListRight = [];
 
   draggableListThird = [
     {
@@ -86,30 +79,27 @@ export class ProjectRoasterComponent implements OnInit {
     dndHorizontal: true,
   };
 
-  employees: any;
+  projects: any;
+  currentProject:any;
+  currentProjectEmployees=[];
+  currentProjectEmployeesNpds = {};
 	holidays : any;
-	npdIDs:any[];
-  npds = [];
-  fromDate :Date;
-  toDate :Date;
-  
-  todayDate: Date;
-  todaysday: Date;
+  todayDate: any;
+  todaysday: any;
   strDay: String;
-
-  events = ['select', 'RDO', 'Annual Leave', 'Sick Leave', 'Other'];
-  public model = new MyEvent(this.events[0]);
   radioBtn1: String;
   repeatVal: 0;
-	initial: number;
-	selectedEmployeeId:number;
-  npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
+	selectedProjectId:number;
   deletedEvent: any;
+  available = [];
+  assignedToThisPro = [];
+  assignedToOtherPro = [];
 
 
 
   constructor(private http: HttpClient, private modalService: NgbModal) {
     this.setHorizontalLayout( this.horizontalLayoutActive );
+    this.currentProjectEmployees = [];
     
   }
 
@@ -117,7 +107,7 @@ export class ProjectRoasterComponent implements OnInit {
    this.layout = (horizontalLayoutActive) ? this.horizontalLayout : this.verticalLayout;
  }
 
- onDragStart( event:DragEvent ) {
+  onDragStart( event:DragEvent ) {
 
     this.currentDragEffectMsg = "";
     this.currentDraggableEvent = event;
@@ -125,6 +115,9 @@ export class ProjectRoasterComponent implements OnInit {
   }
 
   onDragged( item:any, list:any[], effect:DropEffect ) {
+	  console.log(this.todayDate);
+	  console.log(this.todaysday);
+	  console.log(typeof this.todayDate);
 
     this.currentDragEffectMsg = `Drag ended with effect "${effect}"!`;
 
@@ -158,6 +151,95 @@ export class ProjectRoasterComponent implements OnInit {
   }
 
 
+	getProjects(){
+		this.http.get('http://localhost:8080/project?max=30').subscribe(data=>{
+			this.projects = data;
+		});
+	}
+
+	getProject(){
+		this.http.get('http://localhost:8080/project/'+this.selectedProjectId).subscribe(data=>{
+			this.currentProject = data;
+			var employeesID = this.currentProject["employees"];
+			//console.log(employeesID);
+			employeesID.forEach(data=>{
+				var id = data["employee_id"];
+				this.getEmployee(id);
+			});
+		});
+	}
+
+	getEmployee(i){
+		var npdays = [];
+		var name = '';
+		this.http.get('http://localhost:8080/employee/'+i).subscribe(data=>{
+			this.currentProjectEmployees.push(data);
+			console.log(this.currentProjectEmployees);
+			name = data['employee_name'];
+			data['npds'].forEach((npdid, index) =>{
+				console.log('index:',index);
+				console.log('length:',data['npds'].length);
+				var x = this.getnpd(npdid['npd_id'],npdays);
+				if(index+1==data['npds'].length){
+					this.currentProjectEmployeesNpds[name]=npdays;
+					console.log(this.currentProjectEmployeesNpds)
+				}
+			});
+		});
+	}
+
+	getAvailability(available, npdays,today,employee_name){
+		console.log('today:',today);
+		console.log('npdays:',npdays);
+		console.log(npdays.includes(today));
+		if(!npdays.includes(today) && !available.includes(employee_name)){
+			available.push(employee_name);
+			this.draggableListRight.push(
+				{
+					content: employee_name,
+					effectAllowed: "move",
+					disable: false,
+					handle: false,
+				}
+			)
+
+		}
+		console.log(available);
+	}
+
+	getdays(npd, npdays){
+		var start = new Date(npd['start'].split('T')[0]);
+		var end = new Date(npd['end'].split('T')[0]);
+		var repeat = npd['repeatDays'];
+		var timeDiff = Math.abs(end.getTime() - start.getTime());
+		var dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+		for(var i=0;i<=repeat;i++){
+			for(var j=0;j<=dayDiff;j++){
+				var result = start;
+				result.setDate(result.getDate() + j + i*7);
+				if(result.getMonth()+1<10){
+					var mon = '0'+ (result.getMonth()+1);
+				}else {var mon = ''+(result.getMonth()+1);}
+				if(result.getDate()<10){
+					var date = '0'+result.getDate();
+				}else {var date = ''+result.getDate();}
+				npdays.push(result.getFullYear()+"-"+mon+"-"+date);
+				console.log(npdays);
+
+			}
+		}
+
+	}
+
+	getnpd(i,npdays){
+		this.http.get('http://localhost:8080/npd/'+i).subscribe(data=>{
+			this.getdays(data, npdays);
+		});
+		return true
+	}
+
+
+
 	displayCalendar(){
 		var hds = this.holidays.map(holiday => {
 			return {
@@ -185,12 +267,18 @@ export class ProjectRoasterComponent implements OnInit {
       // public toDay = "";
 
       dayClick: (data, jsEvent, view) => {
+				this.draggableListRight = [];
         var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-        this.fromDate = data.format();
-        this.todayDate = this.fromDate;
+        this.todayDate = data.format();
+        var today = data.format();
         this.modalService.open(this.dialogModal,{size:'lg'});
         this.todaysday = data.day();
-        this.strDay = days[Number(this.todaysday)]
+        this.strDay = days[Number(this.todaysday)];
+        var available=[];
+	      for (var key in this.currentProjectEmployeesNpds){
+		      console.log( key, this.currentProjectEmployeesNpds[key] );
+		      this.getAvailability(available, this.currentProjectEmployeesNpds[key],today, key);
+	      }
       },
 
       eventClick: (calEvent, jsEvent, view) => {
@@ -210,6 +298,7 @@ export class ProjectRoasterComponent implements OnInit {
 
 	ngOnInit() {
 		this.getPublicHoliday();
+		this.getProjects();
 	}
 
 }

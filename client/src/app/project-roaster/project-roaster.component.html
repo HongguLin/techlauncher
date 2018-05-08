@@ -1,3 +1,14 @@
+<!-- Project dropdown -->
+<div class="col">
+  <label class="col-4 col-form-label">Select Project: </label>
+  <div class="col-4">
+    <select class="form-control" [(ngModel)]="selectedProjectId" (ngModelChange)='getProject()' required>
+      <option *ngFor="let p of projects" [value]="p.project_id" ng-selected="p.project_id == selectedProjectId">{{p.project_name}}</option>
+    </select>
+  </div>
+  <p>You selected: {{selectedProjectId}}</p>
+</div>
+
 <div id='calendar'></div>
 
 
@@ -23,7 +34,7 @@
              class="layout-padding">
 
           <div>
-            <pre> Assign to {{fromDate}} </pre>
+            <pre> Assign to {{todayDate}} </pre>
             <mat-list [fxLayout]="layout.list"
                       dndDropzone
                       [dndHorizontal]="layout.dndHorizontal"

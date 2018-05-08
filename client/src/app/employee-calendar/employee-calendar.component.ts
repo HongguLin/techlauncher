@@ -52,7 +52,6 @@ export class EmployeeCalendarComponent implements OnInit {
 	getPublicHoliday() {
 		this.http.get('http://localhost:8080/holidays?max=30').subscribe(data => {
 			this.holidays = data;
-			//this.displayCalendar()
 		});
 	}
 
@@ -70,6 +69,8 @@ export class EmployeeCalendarComponent implements OnInit {
 			this.npds.push(data);
 			console.log(this.npds)
 			if(index==l){
+				console.log("index:",index);
+				console.log("l:",l);
 				this.displayCalendar();
 			}
 		});
@@ -80,18 +81,13 @@ export class EmployeeCalendarComponent implements OnInit {
 		this.http.get('http://localhost:8080/employee/'+this.selectedEmployeeId).subscribe(data=>{
 			this.npdIDs = data['npds'];
 			console.log(this.npdIDs);
-			var index = 0;
 			if(this.npdIDs.length!=0){
-				this.npdIDs.forEach(data =>{
-					index ++;
-					var i = data['npd_id'];
-					console.log(i);
-					this.getnpd(i,index,this.npdIDs.length);
+				this.npdIDs.forEach((data, index)=>{
+					this.getnpd(data['npd_id'],index+1,this.npdIDs.length);
 				});
 			}else {
 				this.displayCalendar()
 			}
-
 		});
 	}
 
@@ -122,7 +118,7 @@ export class EmployeeCalendarComponent implements OnInit {
 		} else if (this.radioBtn1 == 'repeat') {
 			this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, this.repeatVal);
 		} else {
-			this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 1);
+			this.npd = new Npd(this.fromDate, this.toDate, this.model.event, this.selectedEmployeeId, 0);
 		}
 		this.saveEvent();
 	}
@@ -151,7 +147,7 @@ export class EmployeeCalendarComponent implements OnInit {
 
 			var nds = [];
 			for (var i = 0; i < ndsWithRepeat.length; i++) {
-				for (var j = 0; j < ndsWithRepeat[i].repeat; j++) {
+				for (var j = 0; j <= ndsWithRepeat[i].repeat; j++) {
 					var startDate = new Date(ndsWithRepeat[i].start);
 					var endDate = new Date(ndsWithRepeat[i].end);
 
@@ -210,5 +206,6 @@ export class EmployeeCalendarComponent implements OnInit {
 		this.getEmployee();
 		//this.getnpds();
 	}
+
 
 }
