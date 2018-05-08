@@ -14,6 +14,8 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { datepickerLocale } from 'fullcalendar';
 import { expand } from 'rxjs/operator/expand';
+import {Wd} from '../wd';
+import {Time} from "@angular/common";
 
 @Component({
   selector: 'app-project-roaster',
@@ -67,9 +69,12 @@ export class ProjectRoasterComponent implements OnInit {
   repeatVal: 0;
 	selectedProjectId:number;
   deletedEvent: any;
-  available = [];
-  assignedToThisPro = [];
-  assignedToOtherPro = [];
+
+  startTime: Time;
+  finishTime: Time;
+  currentSelectedEmployee:any;
+	wd:any;
+
 
 
 
@@ -215,9 +220,6 @@ export class ProjectRoasterComponent implements OnInit {
 		console.log(assigned);
 	}
 
-
-
-
 	getnpdays(npd, npdays){
 		var start = new Date(npd['start'].split('T')[0]);
 		var end = new Date(npd['end'].split('T')[0]);
@@ -265,6 +267,18 @@ export class ProjectRoasterComponent implements OnInit {
 			this.getwdays(data, wdays);
 		});
 		return true
+	}
+
+
+	saveworkday(){
+		//need to set up (this.startTime, this.finishTime, this.currentSelectedEmployee) first
+		this.wd = new Wd(this.todayDate, this.startTime, this.finishTime, this.currentSelectedEmployee);
+		this.http.post('http://localhost:8080/wd', this.wd)
+			.subscribe(res => {let id = res['id'];
+				}, (err) => {
+					console.log(err);
+				}
+			);
 	}
 
 
