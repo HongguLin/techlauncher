@@ -25,32 +25,7 @@ export class ProjectRoasterComponent implements OnInit {
 
   @ViewChild("deletePopWindow") deleteModal: TemplateRef<any>
 
-  draggableListLeft = [
-    {
-      content: "Tom",
-      effectAllowed: "move",
-      disable: false,
-      handle: false,
-    },
-    {
-      content: "Hong",
-      effectAllowed: "move",
-      disable: false,
-      handle: false,
-    },
-    {
-      content: "Sally",
-      effectAllowed: "copyMove",
-      disable: false,
-      handle: false
-    },
-    {
-      content: "Bob",
-      effectAllowed: "move",
-      disable: false,
-      handle: true,
-    }
-  ];
+  draggableListLeft = [];
 
   draggableListRight = [];
 
@@ -83,6 +58,7 @@ export class ProjectRoasterComponent implements OnInit {
   currentProject:any;
   currentProjectEmployees=[];
   currentProjectEmployeesNpds = {};
+  currentProjectEmployeesWds = {};
 	holidays : any;
   todayDate: any;
   todaysday: any;
@@ -171,11 +147,14 @@ export class ProjectRoasterComponent implements OnInit {
 
 	getEmployee(i){
 		var npdays = [];
+		var wdays = [];
 		var name = '';
 		this.http.get('http://localhost:8080/employee/'+i).subscribe(data=>{
 			this.currentProjectEmployees.push(data);
 			console.log(this.currentProjectEmployees);
 			name = data['employee_name'];
+
+			//get npds for available employee obtain
 			data['npds'].forEach((npdid, index) =>{
 				console.log('index:',index);
 				console.log('length:',data['npds'].length);
@@ -183,6 +162,17 @@ export class ProjectRoasterComponent implements OnInit {
 				if(index+1==data['npds'].length){
 					this.currentProjectEmployeesNpds[name]=npdays;
 					console.log(this.currentProjectEmployeesNpds)
+				}
+			});
+
+			//get wds for assigned employee obtain
+			data['wds'].forEach((wdid, index) =>{
+				console.log('index:',index);
+				console.log('length:',data['wds'].length);
+				var y = this.getnpd(wdid['wd_id'],wdays);
+				if(index+1==data['wds'].length){
+					this.currentProjectEmployeesWds[name]=wdays;
+					console.log(this.currentProjectEmployeesWds)
 				}
 			});
 		});
@@ -207,7 +197,28 @@ export class ProjectRoasterComponent implements OnInit {
 		console.log(available);
 	}
 
-	getdays(npd, npdays){
+	getAssigned(assigned, wdays,today,employee_name){
+		console.log('today:',today);
+		console.log('wdays:',wdays);
+		console.log(wdays.includes(today));
+		if(wdays.includes(today) && !assigned.includes(employee_name)){
+			assigned.push(employee_name);
+			this.draggableListLeft.push(
+				{
+					content: employee_name,
+					effectAllowed: "move",
+					disable: false,
+					handle: false,
+				}
+			)
+		}
+		console.log(assigned);
+	}
+
+
+
+
+	getnpdays(npd, npdays){
 		var start = new Date(npd['start'].split('T')[0]);
 		var end = new Date(npd['end'].split('T')[0]);
 		var repeat = npd['repeatDays'];
@@ -225,15 +236,33 @@ export class ProjectRoasterComponent implements OnInit {
 				}else {var date = ''+result.getDate();}
 				npdays.push(result.getFullYear()+"-"+mon+"-"+date);
 				console.log(npdays);
-
 			}
 		}
-
 	}
 
 	getnpd(i,npdays){
 		this.http.get('http://localhost:8080/npd/'+i).subscribe(data=>{
-			this.getdays(data, npdays);
+			this.getnpdays(data, npdays);
+		});
+		return true
+	}
+
+	getwdays(wd, wdays){
+		var day = new Date(wd['day'].split('T')[0]);
+
+		if(day.getMonth()+1<10){
+			var mon = '0'+ (day.getMonth()+1);
+		}else {var mon = ''+(day.getMonth()+1);}
+		if(day.getDate()<10){
+			var date = '0'+day.getDate();
+		}else {var date = ''+day.getDate();}
+		wdays.push(day.getFullYear()+"-"+mon+"-"+date);
+		console.log(wdays);
+	}
+
+	getwd(i,wdays){
+		this.http.get('http://localhost:8080/wd/'+i).subscribe(data=>{
+			this.getwdays(data, wdays);
 		});
 		return true
 	}
@@ -275,9 +304,11 @@ export class ProjectRoasterComponent implements OnInit {
         this.todaysday = data.day();
         this.strDay = days[Number(this.todaysday)];
         var available=[];
+        var assigned=[];
 	      for (var key in this.currentProjectEmployeesNpds){
 		      console.log( key, this.currentProjectEmployeesNpds[key] );
 		      this.getAvailability(available, this.currentProjectEmployeesNpds[key],today, key);
+		      this.getAssigned(assigned,this.currentProjectEmployeesWds[key],today, key);
 	      }
       },
 
