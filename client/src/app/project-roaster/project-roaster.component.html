@@ -81,6 +81,7 @@
                              (dndCopied)="onDragged(item, draggableListRight, 'copy')"
                              (dndLinked)="onDragged(item, draggableListRight, 'link')"
                              (dndMoved)="onDragged(item, draggableListRight, 'move')"
+                             (dndMoved)="saveworkday()"
                              (dndCanceled)="onDragged(item, draggableListRight, 'none')"
                              (dndEnd)="onDragEnd($event)">
 
@@ -132,14 +133,14 @@
       <div class="form-group row">
         <label for="example-date-input" class="col-4 col-form-label">Start:</label>
         <div class="col-4">
-          <input class="form-control" type="time" id="example-date-input">
+          <input class="form-control" type="time" [(ngModel)]="startTime" id="example-date-input">
         </div>
       </div>
  
       <div class="form-group row">
         <label for="example-date-input" class="col-4 col-form-label">End:</label>
         <div class="col-4">
-          <input class="form-control" type="time" (ngModelChange)="toDateChange($event)" id="example-date-input">
+          <input class="form-control" type="time" [(ngModel)]="finishTime" id="example-date-input">
         </div>
       </div>
       <hr />
@@ -158,7 +159,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="deletebtn" (click)="c('Close click')">Save</button>
+        <button type="button" class="btn btn-primary" id="deletebtn" (click)="saveworkday();c('Close click')">Save</button>
         <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
       </div>
 
