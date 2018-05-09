@@ -76,8 +76,6 @@ export class ProjectRoasterComponent implements OnInit {
 	wd:any;
 
 
-
-
   constructor(private http: HttpClient, private modalService: NgbModal) {
     this.setHorizontalLayout( this.horizontalLayoutActive );
     this.currentProjectEmployees = [];
@@ -248,7 +246,7 @@ export class ProjectRoasterComponent implements OnInit {
 		});
 	}
 
-	//get available employee for today and assign them to the available draggable list
+	//get available employee in current project for today and assign them to the available draggable list(second draggable list)
 	getAvailability(available, npdays,today,employee_name){
 		console.log('today:',today);
 		console.log('npdays:',npdays);
@@ -267,7 +265,7 @@ export class ProjectRoasterComponent implements OnInit {
 		console.log(available);
 	}
 
-	//get assigned employee for current project on today and assign them to the assigned to today draggable list
+	//get assigned employee for current project on today and assign them to the assigned to today draggable list(fist draggable list)
 	getAssigned(assigned, wdays,today,employee_name){
 		console.log('today:',today);
 		console.log('wdays:',wdays);
@@ -286,7 +284,7 @@ export class ProjectRoasterComponent implements OnInit {
 		console.log(assigned);
 	}
 
-
+	//get available employees in other project for today and assign them to the assign to other project draggable list(Third draggable list)
 	getOtherProAvailability(available, npdays, today, employee_name){
 		console.log('today:',today);
 		console.log('npdays:',npdays);
@@ -353,6 +351,21 @@ export class ProjectRoasterComponent implements OnInit {
 			this.getwdays(data, wdays);
 		});
 		return true
+	}
+
+
+	/*
+	when drag the employee from assigned to other project list to available to today list,
+	trigger this function to remove employee in other project and add employee to current function
+
+	To Do:
+	obtain the id of the employee being dragged
+	obatin the id of the other project the employee belong to
+	delete employee in other project he/she used belong to
+	add employee to current project
+	*/
+	moveEmployee(){
+
 	}
 
 
