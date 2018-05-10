@@ -138,11 +138,11 @@ export class ProjectRoasterComponent implements OnInit {
   }
 
   onDragEnd( event:DragEvent ) {
-    this.modalService.open(this.warningModal);
     this.currentDraggableEvent = event;
   }
 
   onDrop( event:DndDropEvent, list?:any[] ) {
+    this.modalService.open(this.warningModal);
 
     if( list
       && (event.dropEffect === "copy"
