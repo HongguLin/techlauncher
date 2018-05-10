@@ -1,14 +1,12 @@
 package com.tradeup
 import grails.rest.*
 
-import java.sql.Time
-
 @Resource(uri='/wd')
 class WorkDay {
     Integer wd_id
     Date day
-    Time startTime
-    Time finishTime
+    Date startTime
+    Date finishTime
     static belongsTo = [employee:Employee]
 
     static constraints = {

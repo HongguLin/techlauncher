@@ -16,6 +16,10 @@ import { datepickerLocale } from 'fullcalendar';
 import { expand } from 'rxjs/operator/expand';
 import {Wd} from '../wd';
 import {Time} from "@angular/common";
+import {Project} from "../project";
+import {Employee} from "../employee";
+
+
 
 @Component({
   selector: 'app-project-roaster',
@@ -70,8 +74,8 @@ export class ProjectRoasterComponent implements OnInit {
 	selectedProjectId:number;
   deletedEvent: any;
 
-  startTime: Time;
-  finishTime: Time;
+  startTime: any;
+  finishTime: any;
   currentSelectedEmployee:any;
 	wd:any;
 
@@ -79,6 +83,8 @@ export class ProjectRoasterComponent implements OnInit {
   constructor(private http: HttpClient, private modalService: NgbModal) {
     this.setHorizontalLayout( this.horizontalLayoutActive );
     this.currentProjectEmployees = [];
+    this.startTime = "09:00";
+    this.finishTime = "17:00";
     
   }
 
@@ -168,36 +174,33 @@ export class ProjectRoasterComponent implements OnInit {
 			this.currentProjectEmployees.push(data);
 			console.log(this.currentProjectEmployees);
 			name = data['employee_name'];
+			var id = data['employee_id'];
 
 			//get npds for available employee obtain
 			if(data['npds'].length>0){
 				data['npds'].forEach((npdid, index) =>{
-					console.log('index:',index);
-					console.log('length:',data['npds'].length);
 					var x = this.getnpd(npdid['npd_id'],npdays);
 					if(index+1==data['npds'].length){
-						this.currentProjectEmployeesNpds[name]=npdays;
+						this.currentProjectEmployeesNpds[id]=[name, npdays];
 						console.log(this.currentProjectEmployeesNpds)
 					}
 				});
 			}else {
-				this.currentProjectEmployeesNpds[name]=[];
+				this.currentProjectEmployeesNpds[id]=[name,[]];
 			}
 
 
 			//get wds for assigned employee obtain
 			if(data['wds'].length>0){
 				data['wds'].forEach((wdid, index) =>{
-					console.log('index:',index);
-					console.log('length:',data['wds'].length);
-					var y = this.getnpd(wdid['wd_id'],wdays);
+					var y = this.getwd(wdid['wd_id'],wdays);
 					if(index+1==data['wds'].length){
-						this.currentProjectEmployeesWds[name]=wdays;
+						this.currentProjectEmployeesWds[id]=[name,wdays];
 						console.log(this.currentProjectEmployeesWds)
 					}
 				});
 			}else {
-				this.currentProjectEmployeesWds[name]=[];
+				this.currentProjectEmployeesWds[id]=[name,[]];
 			}
 
 		});
@@ -212,20 +215,19 @@ export class ProjectRoasterComponent implements OnInit {
 			this.otherProjectsEmployees.push(data);
 			console.log(this.otherProjectsEmployees);
 			name = data['employee_name'];
+			var id = data['employee_id'];
 
 			//get npds for available employee obtain
 			if(data['npds'].length>0){
 				data['npds'].forEach((npdid, index) =>{
-					console.log('index:',index);
-					console.log('length:',data['npds'].length);
 					var x = this.getnpd(npdid['npd_id'],npdays);
 					if(index+1==data['npds'].length){
-						this.otherProjectsEmployeesNpds[name]=npdays;
+						this.otherProjectsEmployeesNpds[id]=[name, npdays];
 						console.log(this.otherProjectsEmployeesNpds)
 					}
 				});
 			}else {
-				this.otherProjectsEmployeesNpds[name]=[];
+				this.otherProjectsEmployeesNpds[id]=[name,[]];
 			}
 
 			//get wds for assigned employee obtain
@@ -233,28 +235,26 @@ export class ProjectRoasterComponent implements OnInit {
 				data['wds'].forEach((wdid, index) =>{
 					console.log('index:',index);
 					console.log('length:',data['wds'].length);
-					var y = this.getnpd(wdid['wd_id'],wdays);
+					var y = this.getwd(wdid['wd_id'],wdays);
 					if(index+1==data['wds'].length){
-						this.otherProjectsEmployeesWds[name]=wdays;
+						this.otherProjectsEmployeesWds[id]=[name, wdays];
 						console.log(this.otherProjectsEmployeesWds)
 					}
 				});
 			}else {
-				this.otherProjectsEmployeesWds[name]=[];
+				this.otherProjectsEmployeesWds[id]=[name,[]];
 			}
 
 		});
 	}
 
 	//get available employee in current project for today and assign them to the available draggable list(second draggable list)
-	getAvailability(available, npdays,today,employee_name){
-		console.log('today:',today);
-		console.log('npdays:',npdays);
-		console.log(npdays.includes(today));
-		if(!npdays.includes(today) && !available.includes(employee_name)){
+	getAvailability(available, npdays,wdays, today,employee_name,id){
+		if(!npdays.includes(today) && !wdays.includes(today) &&!available.includes(employee_name)){
 			available.push(employee_name);
 			this.draggableListRight.push(
 				{
+					id:id,
 					content: employee_name,
 					effectAllowed: "move",
 					disable: false,
@@ -266,14 +266,12 @@ export class ProjectRoasterComponent implements OnInit {
 	}
 
 	//get assigned employee for current project on today and assign them to the assigned to today draggable list(fist draggable list)
-	getAssigned(assigned, wdays,today,employee_name){
-		console.log('today:',today);
-		console.log('wdays:',wdays);
-		console.log(wdays.includes(today));
+	getAssigned(assigned, wdays,today,employee_name,id){
 		if(wdays.includes(today) && !assigned.includes(employee_name)){
 			assigned.push(employee_name);
 			this.draggableListLeft.push(
 				{
+					id:id,
 					content: employee_name,
 					effectAllowed: "move",
 					disable: false,
@@ -285,7 +283,7 @@ export class ProjectRoasterComponent implements OnInit {
 	}
 
 	//get available employees in other project for today and assign them to the assign to other project draggable list(Third draggable list)
-	getOtherProAvailability(available, npdays, today, employee_name){
+	getOtherProAvailability(available, npdays, today, employee_name,id){
 		console.log('today:',today);
 		console.log('npdays:',npdays);
 		console.log(npdays.includes(today));
@@ -293,6 +291,7 @@ export class ProjectRoasterComponent implements OnInit {
 			available.push(employee_name);
 			this.draggableListThird.push(
 				{
+					id:id,
 					content: employee_name,
 					effectAllowed: "move",
 					disable: false,
@@ -357,30 +356,54 @@ export class ProjectRoasterComponent implements OnInit {
 	/*
 	when drag the employee from assigned to other project list to available to today list,
 	trigger this function to remove employee in other project and add employee to current function
-
-	To Do:
-	obtain the id of the employee being dragged
-	obatin the id of the other project the employee belong to
-	delete employee in other project he/she used belong to
-	add employee to current project
 	*/
-	moveEmployee(){
+	moveEmployee(id){
+		this.http.get('http://localhost:8080/employee/'+id).subscribe(data=>{
+			var from = data['project']['project_id'];
+			var selectemployee = new Employee(data['employee_name'],this.selectedProjectId);
+			console.log('selectemployee:',selectemployee);
 
+			this.http.get('http://localhost:8080/project/'+from).subscribe(data1=>{
+				console.log('from project:',data1);
+				var fromemployees = data1['employees'].filter(employee => employee["employee_id"]!=id);
+				console.log('from employee after remove select employee:',fromemployees);
+				var fromPro = new Project(this.selectedProjectId, data1['project_name'],data1['country'], data1['state'], fromemployees);
+				this.http.put('http://localhost:8080/project/'+this.selectedProjectId, fromPro)
+					.subscribe(res => {let id = res['id'];
+						}, (err) => {
+							console.log(err);
+						}
+					);
+			});
+
+			this.http.get('http://localhost:8080/project/'+this.selectedProjectId).subscribe(data2=>{
+				var toemployees = data2['employees'].push(selectemployee);
+				var toPro = new Project(from, data2['project_name'],data2['country'], data2['state'], toemployees);
+
+				this.http.put('http://localhost:8080/project/'+this.selectedProjectId, toPro)
+					.subscribe(res => {let id = res['id'];
+						}, (err) => {
+							console.log(err);
+						}
+					);
+			});
+		});
 	}
 
 
 	/*
 	when drag the employee from available list to assigned to today list,
 	trigger this function to add workday to the employee being dragged
-
-	To Do:
-	obtain startTime
-	obtain finishTime
-	obtain the id of the employee being dragged
 	*/
-	saveworkday(){
+	saveworkday(id){
 		//need to set up (this.startTime, this.finishTime, this.currentSelectedEmployee) first
-		this.wd = new Wd(this.todayDate, this.startTime, this.finishTime, this.currentSelectedEmployee);
+		var date = this.todayDate.split('-');
+
+		var today = new Date(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2]), parseInt(this.finishTime.split(':')[0]), parseInt(this.finishTime.split(':')[1]), 0, 0);
+		var start = new Date(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2]), parseInt(this.finishTime.split(':')[0]), parseInt(this.finishTime.split(':')[1]), 0, 0);
+		var end = new Date(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2]), parseInt(this.finishTime.split(':')[0]), parseInt(this.finishTime.split(':')[1]), 0, 0);
+
+		this.wd = new Wd(today, start, end, id);
 		this.http.post('http://localhost:8080/wd', this.wd)
 			.subscribe(res => {let id = res['id'];
 				}, (err) => {
@@ -418,6 +441,7 @@ export class ProjectRoasterComponent implements OnInit {
       // public toDay = "";
 
       dayClick: (data, jsEvent, view) => {
+				this.draggableListLeft = [];
 				this.draggableListRight = [];
 				this.draggableListThird = [];
         var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -432,26 +456,22 @@ export class ProjectRoasterComponent implements OnInit {
 
         //get assign to current project employee on today (left draggable list)
 	      for(var key in this.currentProjectEmployeesWds){
-		      this.getAssigned(assigned,this.currentProjectEmployeesWds[key],today, key);
+		      this.getAssigned(assigned,this.currentProjectEmployeesWds[key][1],today, this.currentProjectEmployeesWds[key][0],key);
 	      }
 
 	      //get available employee in current project on today (middle draggable list)
 	      for (var key in this.currentProjectEmployeesNpds){
 		      console.log(key, this.currentProjectEmployeesNpds[key]);
-		      this.getAvailability(available, this.currentProjectEmployeesNpds[key],today, key);
+		      this.getAvailability(available, this.currentProjectEmployeesNpds[key][1],this.currentProjectEmployeesWds[key][1], today, this.currentProjectEmployeesNpds[key][0],key);
 	      }
 
 	      //get available employee on other project on today (right draggable list)
 	      for(var key in this.otherProjectsEmployeesNpds){
 		      console.log(key, this.otherProjectsEmployeesNpds[key]);
-		      this.getOtherProAvailability(otherProAvailable, this.otherProjectsEmployeesNpds[key], today, key);
+		      this.getOtherProAvailability(otherProAvailable, this.otherProjectsEmployeesNpds[key][1], today, this.otherProjectsEmployeesNpds[key][0],key);
 	      }
-      },
+      }
 
-      eventClick: (calEvent, jsEvent, view) => {
-		    this.deletedEvent.npd_id = calEvent.npd_id;
-        this.modalService.open(this.deleteModal);
-      },
 
 		});
 
