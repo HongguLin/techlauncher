@@ -154,27 +154,34 @@
     </ng-template>
   </ngb-tab>
 </ngb-tabset>
+</div>
+</ng-template>
+
 
 <pre>{{closeResult}}</pre>
 
-<!-- delete event popup window -->
+<!-- warning popup window -->
 
-<ng-template #deletePopWindow let-c="close" let-d="dismiss">
+<ng-template #warningPopWindow let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Confirm to delete this event?</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <!-- <span aria-hidden="true">&times;</span> -->
-    </button>
+    <h2 class="modal-title">Warning</h2>
+    <br>
   </div>
+  <div class="modal-body" >
+    <p>This employee has already been assigned to another project, do you still want to move him/her to this project?</p>
+  </div>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    </button>
+
 
   <div class="modal-footer">
-    <!-- need a button for Confirm(submit function) here-->
-    <button type="button" class="btn btn-primary" id="deletebtn" (click)="deleteEvent();c('Close click')">Confirm</button>
+    <button type="button" class="btn btn-primary" id="warningbtn" (click)="c('Close click');warningEvent()">Confirm</button>
     <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cancel</button>
   </div>
 
 
   </ng-template>
 
+  
   <pre>{{closeResult}}</pre>
 <!-- end -->

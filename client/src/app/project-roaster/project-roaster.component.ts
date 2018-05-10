@@ -23,7 +23,9 @@ import { expand } from 'rxjs/operator/expand';
 export class ProjectRoasterComponent implements OnInit {
   @ViewChild("rooster") dialogModal: TemplateRef<any>
 
-  @ViewChild("deletePopWindow") deleteModal: TemplateRef<any>
+  // @ViewChild("deletePopWindow") deleteModal: TemplateRef<any>
+
+  @ViewChild("warningPopWindow") warningModal: TemplateRef<any>
 
   draggableListLeft = [
     {
@@ -136,8 +138,8 @@ export class ProjectRoasterComponent implements OnInit {
   }
 
   onDragEnd( event:DragEvent ) {
-
-  this.currentDraggableEvent = event;
+    this.modalService.open(this.warningModal);
+    this.currentDraggableEvent = event;
   }
 
   onDrop( event:DndDropEvent, list?:any[] ) {
@@ -195,7 +197,7 @@ export class ProjectRoasterComponent implements OnInit {
 
       eventClick: (calEvent, jsEvent, view) => {
 		    this.deletedEvent.npd_id = calEvent.npd_id;
-        this.modalService.open(this.deleteModal);
+        // this.modalService.open(this.deleteModal);
       },
 
 		});
